@@ -1,14 +1,14 @@
-// @flow
-// import {createStore, applyMiddleware, compose} from 'redux';
-// import thunk from 'redux-thunk';
+
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 // import promise from 'redux-promise';
 // import { createLogger } from 'redux-logger';
-// import rootReducer from '../reducers/rootReducer';
+import rootReducer from '../reducers/rootReducer';
 
-// export default function configureStore() {
-//   const logger = createLogger();
-//   const enhancer = compose(
-//     applyMiddleware(thunk, promise, logger)
-//   )
-//   return createStore(rootReducer, undefined, enhancer)
-// }
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+
+export default function configureStore(initialState) {
+  const store = createStoreWithMiddleware(rootReducer, initialState);
+  return store;
+}
+
