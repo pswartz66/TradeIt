@@ -38,10 +38,12 @@ export default function Root() {
                     },
                 })}
                 tabBarOptions={{
-                    activeTintColor: 'darkblue',
-                    inactiveTintColor: 'slategray',
+                    activeTintColor: '#71c7f0',
+                    inactiveTintColor: '#ababab',
                     style: {
-                        height: 70
+                        height: 70,
+                        backgroundColor: '#000000',
+                        borderTopColor: '#000000'
                     },
                     showLabel: false
                 }}

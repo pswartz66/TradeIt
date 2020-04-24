@@ -7,7 +7,7 @@ import {
     SafeAreaView,
     FlatList
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Image } from 'react-native-elements';
 
 
 
@@ -18,19 +18,32 @@ export default class Profile extends React.Component {
     DATA = [
         {
             id: 'bd7acbea',
-            title: 'First Item',
+            title: 'Vintage Baseball Bat',
+            desc: 'My first item is a...',
+            price: '60',
+            imgCap: 'https://www.stickpng.com/assets/images/5863b6db7d90850fc3ce2932.png'
         },
         {
             id: '3ac68afc',
-            title: 'Second Item',
+            title: 'tennis racket',
+            desc: 'My second item is a...',
+            price: '45',
+            imgCap: 'https://www.pngarts.com/files/3/Tennis-Racket-PNG-Transparent-Image.png'
         },
         {
             id: '58694a0f',
-            title: 'Third Item',
+            title: 'motorcycle',
+            desc: 'My third item is a...',
+            price: '2500',
+            imgCap: 'https://pngimg.com/uploads/motorcycle/motorcycle_PNG5341.png'
         },
         {
             id: '58694a0f',
-            title: 'Fourth Item',
+            title: 'surfboard',
+            desc: 'My fourth item is a...',
+            price: '350',
+            imgCap: 'https://cdn.imgbin.com/24/16/15/imgbin-product-design-surfboard-high-voltage-2ybE1cSmvXk1emSALdVDRPQzc.jpg'
+
         },
     ];
     render() {
@@ -50,7 +63,7 @@ export default class Profile extends React.Component {
                     <View style={styles.profBodyContainer}>
 
                         <Text style={styles.profTextBody}>
-                            History
+                            Trade History
                          </Text>
 
                         <SafeAreaView>
@@ -59,19 +72,28 @@ export default class Profile extends React.Component {
                                 vertical={true}
                                 data={this.DATA}
                                 renderItem={({ item }) => (
-
+                                    <>
+                                    {/* <Image 
+                                        source={{ uri: item.imgCap }}
+                                        style={{ width: 80, height: 80 }}/> */}
                                     <ListItem
-                                        id={item.id}
+                                        // id={item.id}
+                                        leftAvatar={{ 
+                                            rounded: false,
+                                            size: 70,
+                                            source: { uri: item.imgCap }}}
                                         style={styles.profListItems}
                                         title={
                                             <View>
                                                 <Text>
-                                                    Traded: {`${item.title}`} ~$X
+                                                    Traded: {`${item.title}`} ${`${item.price} `}
                                                     for item >>
                                                 </Text>
                                             </View>
                                         }
+                                        key={item.id}
                                     />
+                                    </>
                                 )}
                                 keyExtractor={item => item.id}
 
@@ -99,7 +121,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         backgroundColor: 'white',
         height: 60,
-        width: 60
+        width: 60,
     },
     profTopContainer: {
         flexDirection: 'row',

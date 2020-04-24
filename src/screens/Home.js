@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import HomeHeader from '../components/HomeHeader';
 
 export default class Home extends React.Component {
     
-
     render() {
         return (
             <View style={styles.container}>
-                <Text>
+                <HomeHeader />
+                {/* <Text>
                     Home Screen
-                </Text>
+                </Text> */}
             </View>
         )
     }
