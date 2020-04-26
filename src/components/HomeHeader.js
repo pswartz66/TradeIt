@@ -19,10 +19,9 @@ export default class HomeHeader extends React.Component {
     }
 
     // clear search
-    cancelSearch = () => {
+    clearSearch = () => {
         this.setState({ searchQuery: '' });
-
-        this.cancel.search();
+        // this.cancel.search();
     }
 
     // query some db for items users have posted
@@ -33,24 +32,8 @@ export default class HomeHeader extends React.Component {
         console.log(searchQuery);
 
         // clear input form
-        this.cancelSearch();
+        this.clearSearch();
     }
-
-    addOptions = () => {
-        console.log('clicked options');
-
-        return (
-            <TouchableOpacity>
-
-                <OptionsMenu />
-            </TouchableOpacity>
-
-
-        )
-
-    }
-
-
 
     render() {
         const { searchQuery } = this.state;
@@ -75,14 +58,13 @@ export default class HomeHeader extends React.Component {
                             ref={search => this.search = search}
                             value={searchQuery}
                             onChangeText={this.updateSearchQuery}
-                            onClear={this.cancelSearch}
+                            onClear={this.clearSearch}
                             onSubmitEditing={this.queryFindSpecificItem}
                             cancelButtonProps={{ buttonTextStyle: { fontSize: 16 }, color: 'white' }}
                             clearIcon={false}
                             keyboardAppearance={'dark'}
                             keyboardType={'default'}
                         />
-
 
                         <TouchableOpacity>
                             <OptionsMenu />
@@ -121,9 +103,5 @@ const styles = StyleSheet.create({
             height: 1,
             width: 0
         }
-    },
-    // optionsFilter: {
-    //     marginLeft: 6,
-    //     marginRight: 4
-    // }
+    }
 })

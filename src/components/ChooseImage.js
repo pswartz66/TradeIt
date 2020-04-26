@@ -67,7 +67,8 @@ export default class ChooseImage extends React.Component {
 
                 // when image gets selected
                 // create a form view for entering the title, descr, and price
-                // <ComponentEntryForm />
+                // <ComponentEntryForm /> 
+                // possibly make it a modal? can leverage existing modal...
 
             }
 
