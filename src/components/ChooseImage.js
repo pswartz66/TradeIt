@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -18,7 +18,14 @@ export default class ChooseImage extends React.Component {
                 <TouchableOpacity
                     title="Choose image from camera roll"
                     onPress={this._pickImage}
-                    style={{ width: 210, marginTop: 30, backgroundColor: '#48a4d9', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, borderRadius: 4 }}
+                    style={{ width: 210, marginTop: 30, backgroundColor: '#0454ab', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, borderRadius: 4,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 2
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6.84, }}
                 >
                     <Text style={{ textAlign: 'center', fontSize: 18, color: 'white' }}>
                         Launch camera roll
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 40,
+        backgroundColor: '#d5e4ed'
         // width: 100
     }
 })

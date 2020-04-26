@@ -8,9 +8,7 @@ export default class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <HomeHeader />
-                {/* <Text>
-                    Home Screen
-                </Text> */}
+
             </View>
         )
     }

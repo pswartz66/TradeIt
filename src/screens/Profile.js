@@ -91,11 +91,11 @@ export default class Profile extends React.Component {
                                                 </Text>
                                             </View>
                                         }
-                                        key={item.id}
+                                        key={item.title}
                                     />
                                     </>
                                 )}
-                                keyExtractor={item => item.id}
+                                keyExtractor={item => item.key}
 
                             />
 
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         borderRadius: 50,
         // width: 120
-
     },
     profFlatListItems: {
         // padding: 0,
