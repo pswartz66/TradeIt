@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
     Alert,
     Modal,
@@ -15,12 +15,27 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const OptionsMenu = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [value, setValue] = useState(50);
 
+    // distance slider value
+    const [value, setValue] = useState('50');
+
+    // price range "from" and "to" $ values
     const [fromValue, onFromChangeText] = useState('');
-    // const [fromSubmit, onFromSubmit] = useState('From');
-
     const [toValue, onToChangeText] = useState('');
+
+    // all filtered options as object
+    const [filteredOptions, applyFilter] = useState({
+        distance: '',
+        from: '',
+        to: ''
+    });
+
+    // used to test inputs and slider values after applying filter
+    useEffect(() => {
+        if (fromValue !== 'From' && toValue !== 'To' && value !== '50') {
+            console.log(filteredOptions);
+        }
+    });
 
 
     return (
@@ -49,19 +64,17 @@ const OptionsMenu = (props) => {
                                     onValueChange={value => setValue(value)}
                                     style={styles.slider}
                                     thumbTintColor="#1EB1FC"
+                                    onSlidingComplete={() => applyFilter({ ...filteredOptions, distance: Math.round(value, 0) })}
                                 />
-
                             </View>
 
-
                             <Text style={styles.priceTextHead}>Price:</Text>
-
                             <TextInput style={{
                                 height: 42,
                                 width: '100%',
                                 backgroundColor: '#e8e8e8',
                                 borderRadius: 6,
-                                padding: 4,
+                                padding: 8,
                                 fontSize: 20,
                                 fontWeight: "600",
                             }}
@@ -73,6 +86,7 @@ const OptionsMenu = (props) => {
                                 placeholderTextColor={'black'}
                                 onChangeText={fromValue => onFromChangeText(fromValue)}
                                 value={fromValue}
+                                onEndEditing={() => applyFilter({ ...filteredOptions, from: fromValue })}
                             />
 
                             <TextInput style={{
@@ -80,7 +94,7 @@ const OptionsMenu = (props) => {
                                 width: '100%',
                                 backgroundColor: '#e8e8e8',
                                 borderRadius: 6,
-                                padding: 4,
+                                padding: 8,
                                 fontSize: 20,
                                 fontWeight: "600",
                                 marginTop: 14
@@ -93,13 +107,19 @@ const OptionsMenu = (props) => {
                                 placeholderTextColor={'black'}
                                 onChangeText={toValue => onToChangeText(toValue)}
                                 value={toValue}
-
+                                onEndEditing={() => applyFilter({ ...filteredOptions, to: toValue })}
                             />
 
                             <View style={styles.filterButtons}>
                                 <TouchableHighlight
                                     style={styles.saveButton}
                                     onPress={() => {
+                                        applyFilter({
+                                            ...filteredOptions
+                                        });
+                                        setValue(50);
+                                        onFromChangeText('');
+                                        onToChangeText('');
                                         setModalVisible(!modalVisible);
                                     }}
                                 >
@@ -109,6 +129,9 @@ const OptionsMenu = (props) => {
                                 <TouchableHighlight
                                     style={styles.exitButton}
                                     onPress={() => {
+                                        setValue(50);
+                                        onFromChangeText('');
+                                        onToChangeText('');
                                         setModalVisible(!modalVisible);
                                     }}
                                 >
