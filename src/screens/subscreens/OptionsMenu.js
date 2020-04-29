@@ -12,8 +12,12 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native-gesture-handler";
+// import { setOptions } from '../../redux/actions';
+import { useSelector, useDispatch } from "react-redux";
 
-const OptionsMenu = (props) => {
+import allActions from '../../redux/actions/index';
+
+const OptionsMenu = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
     // distance slider value
@@ -24,19 +28,39 @@ const OptionsMenu = (props) => {
     const [toValue, onToChangeText] = useState('');
 
     // all filtered options as object
-    const [filteredOptions, applyFilter] = useState({
-        distance: '',
-        from: '',
-        to: ''
-    });
+    // const [filteredOptions, applyFilter] = useState({
+    //     distance: '',
+    //     from: '',
+    //     to: ''
+    // });
 
     // used to test inputs and slider values after applying filter
-    useEffect(() => {
-        if (fromValue !== 'From' && toValue !== 'To' && value !== '50') {
-            console.log(filteredOptions);
-        }
-    });
+    // useEffect(() => {
+    //     if (fromValue !== 'From' && toValue !== 'To' && value !== '50') {
+    //         console.log(filteredOptions);
+    //     }
+    // });
 
+
+    const dispatch = useDispatch();
+
+    const opened = useSelector(state => state.modalOpts.isOpen);
+    const closed = useSelector(state => state.modalOpts.isOpen);
+
+
+    // const modalOpen = () => dispatch(isModalOpen());
+
+    function modalOpenedBool() {
+        dispatch({
+            type: "MODAL_OPENED",
+        });
+    }
+
+    function modalClosedBool() {
+        dispatch({
+            type: "MODAL_CLOSED",
+        });
+    }
 
     return (
         <View style={styles.centeredView}>
@@ -109,14 +133,15 @@ const OptionsMenu = (props) => {
                                 value={toValue}
                                 onEndEditing={() => applyFilter({ ...filteredOptions, to: toValue })}
                             />
-
+                            
                             <View style={styles.filterButtons}>
                                 <TouchableHighlight
                                     style={styles.saveButton}
                                     onPress={() => {
-                                        applyFilter({
-                                            ...filteredOptions
-                                        });
+                                        // applyFilter({
+                                        //     ...filteredOptions
+                                        // });
+                                        //dispatch(setOptions.applyFilter(filteredOptions));
                                         setValue(50);
                                         onFromChangeText('');
                                         onToChangeText('');
@@ -129,10 +154,13 @@ const OptionsMenu = (props) => {
                                 <TouchableHighlight
                                     style={styles.exitButton}
                                     onPress={() => {
+                                        modalClosedBool();
                                         setValue(50);
                                         onFromChangeText('');
                                         onToChangeText('');
                                         setModalVisible(!modalVisible);
+                                        // console.log(opened);
+
                                     }}
                                 >
                                     <Text style={styles.textStyle}>Exit</Text>
@@ -143,20 +171,24 @@ const OptionsMenu = (props) => {
 
 
                     </View>
+                    <Text style={{color: 'black', marginTop: 40}}>STATE: {`${closed}`}</Text>
+
                 </View>
             </Modal>
 
             <TouchableOpacity
                 style={styles.openButton}
                 onPress={() => {
-                    console.log('highlight clicked');
+                    // dispatch(allActions.modalOpen(true));
+                    modalOpenedBool();
+                    console.log('highlight clicked: ' + opened);
                     setModalVisible(true);
+
                 }}
             >
                 <Ionicons name={'ios-options'} size={32} color={'white'} />
 
             </TouchableOpacity>
-
 
         </View>
     );

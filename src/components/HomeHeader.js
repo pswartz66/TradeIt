@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import OptionsMenu from '../screens/subscreens/OptionsMenu';
 
 
@@ -35,6 +34,13 @@ export default class HomeHeader extends React.Component {
         this.clearSearch();
     }
 
+    modalOpenedBool = () => {
+        dispatch({
+            type: "MODAL_OPENED"
+        })
+    }
+
+    
     render() {
         const { searchQuery } = this.state;
 
@@ -66,6 +72,7 @@ export default class HomeHeader extends React.Component {
                             keyboardType={'default'}
                         />
 
+                                        
                         <TouchableOpacity>
                             <OptionsMenu />
                         </TouchableOpacity>
