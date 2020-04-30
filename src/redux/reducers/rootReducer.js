@@ -1,10 +1,10 @@
 
 // This is the root reducer and root selectors
 import {combineReducers} from 'redux'
-import modalFilter from './modalFilter'
+import filterOptions from './modalFilter'
 
 const rootReducer = combineReducers({
-  modalFilter
+  filterOptions
 });
 
 export default rootReducer;

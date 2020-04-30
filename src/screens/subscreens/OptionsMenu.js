@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import {
-    Alert,
-    Modal,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View,
-    Slider,
-    TextInput
-} from "react-native";
+import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, Slider, TextInput } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
+import { set_Distance, set_PriceFrom, set_PriceTo, apply_Filter, reset_Options } from '../../redux/actions/index';
 
 const OptionsMenu = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -44,44 +36,75 @@ const OptionsMenu = () => {
 
     // destruct from state in root reducer
     const { distance, priceFrom, priceTo } = useSelector(state => ({
-        ...state.modalFilter
+        ...state.filterOptions
     }))
 
+    // check price range
+    const checkPriceRange = () => {
+        if (priceFrom && priceTo) {
+            if (priceFrom > priceTo) {
+                return false;
+            }
+        }
+    }
+
     // distance in miles for search location range
-    function handleDistance(value) {
-        dispatch({
-            type: "SET_DISTANCE",
-            payload: value
-        })
-    }
+    const setDistance = value => dispatch(set_Distance(value));
+    // distance in miles for search location range
+    // function handleDistance(value) {
+    //     dispatch({
+    //         type: "SET_DISTANCE",
+    //         payload: value
+    //     })
+    // }
+
     // price range "from" $ value
-    function handlePriceFrom(value) {
-        dispatch({
-            type: "SET_PRICE_FROM",
-            payload: value
-        })
-    }
+    const setPriceFrom = value => dispatch(set_PriceFrom(value));
+    // price range "from" $ value
+    // function handlePriceFrom(value) {
+    //     dispatch({
+    //         type: "SET_PRICE_FROM",
+    //         payload: value
+    //     })
+    // }
+
     // price range "to" $ value
-    function handlePriceTo(value) {
-        dispatch({
-            type: "SET_PRICE_TO",
-            payload: value
-        })
+    const setPriceTo = value => dispatch(set_PriceTo(value));
+    // price range "to" $ value
+    // function handlePriceTo(value) {
+    //     dispatch({
+    //         type: "SET_PRICE_TO",
+    //         payload: value
+    //     })
+    // }
+
+    // return state and set values back to initial state
+    const applyFilter = () => {
+        dispatch(apply_Filter());
+        console.log(distance, priceFrom, priceTo)
+    };
+    // return state and set values back to initial state
+    // function applyFilter() {
+    //     dispatch({
+    //         type: "APPLY_FILTER"
+    //     })
+    //     console.log(distance, priceFrom, priceTo);
+    // }
+
+
+    // reset state
+    const resetOptions = () => {
+        dispatch(reset_Options());
+        console.log(distance, priceFrom, priceTo);
     }
     // reset state
-    function handleReset() {
-        dispatch({
-            type: "RESET_OPTIONS"
-        });
-        console.log(distance, priceFrom, priceTo);
-    }
-    // return state and set values back to initial state
-    function applyFilter() {
-        dispatch({
-            type: "APPLY_FILTER"
-        })
-        console.log(distance, priceFrom, priceTo);
-    }
+    // function handleReset() {
+    //     dispatch({
+    //         type: "RESET_OPTIONS"
+    //     });
+    //     console.log(distance, priceFrom, priceTo);
+    // }
+
 
     return (
         <View style={styles.centeredView}>
@@ -107,7 +130,7 @@ const OptionsMenu = () => {
                                     maximumTractTintColor="#1EB1FC"
                                     step={.1}
                                     value={50}
-                                    onValueChange={handleDistance}
+                                    onValueChange={setDistance}
                                     style={styles.slider}
                                     thumbTintColor="#1EB1FC"
                                 />
@@ -129,7 +152,7 @@ const OptionsMenu = () => {
                                 returnKeyType={'done'}
                                 placeholder={'From'}
                                 placeholderTextColor={'black'}
-                                onChangeText={handlePriceFrom}
+                                onChangeText={setPriceFrom}
                                 value={priceFrom}
                             />
 
@@ -149,7 +172,7 @@ const OptionsMenu = () => {
                                 returnKeyType={'done'}
                                 placeholder={'To'}
                                 placeholderTextColor={'black'}
-                                onChangeText={handlePriceTo}
+                                onChangeText={setPriceTo}
                                 value={priceTo}
                             />
 
@@ -157,8 +180,17 @@ const OptionsMenu = () => {
                                 <TouchableHighlight
                                     style={styles.saveButton}
                                     onPress={() => {
-                                        applyFilter();
-                                        setModalVisible(!modalVisible);
+                                        if (!checkPriceRange) {
+                                            // when testing seems like alert might be auto closing modal
+                                            alert('Price From must be less than Price To');
+                                            // resetOptions();
+                                            // setModalVisible(true);
+                                        } else {
+                                            applyFilter();
+                                            setModalVisible(false);
+                                        }
+                                        // checkPriceRange();
+                                        // applyFilter();
                                     }}
                                 >
                                     <Text style={styles.textStyle}>Apply Filter</Text>
@@ -167,8 +199,8 @@ const OptionsMenu = () => {
                                 <TouchableHighlight
                                     style={styles.exitButton}
                                     onPress={() => {
-                                        handleReset();
-                                        setModalVisible(!modalVisible);
+                                        resetOptions();
+                                        // setModalVisible(!modalVisible);
                                     }}
                                 >
                                     <Text style={styles.textStyle}>Exit</Text>

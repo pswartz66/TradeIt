@@ -5,18 +5,21 @@ import { APPLY_FILTER } from '../constants/actionTypes';
 import { RESET_OPTIONS } from '../constants/actionTypes';
 
 
-export const setDistance = () => ({
-    type: SET_DISTANCE
+export const set_Distance = (value) => ({
+    type: SET_DISTANCE,
+    payload: value
+});
+export const set_PriceFrom = (value) => ({
+    type: SET_PRICE_FROM,
+    payload: value
 })
-export const setPriceFrom = () => ({
-    type: SET_PRICE_FROM
+export const set_PriceTo = (value) => ({
+    type: SET_PRICE_TO,
+    payload: value
 })
-export const setPriceTo = () => ({
-    type: SET_PRICE_TO
-})
-export const applyFilter = () => ({
+export const apply_Filter = () => ({
     type: APPLY_FILTER
 })
-export const resetOptions = () => ({
+export const reset_Options = () => ({
     type: RESET_OPTIONS
 })
