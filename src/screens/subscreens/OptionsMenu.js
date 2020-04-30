@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
     Alert,
     Modal,
@@ -9,23 +9,21 @@ import {
     Slider,
     TextInput
 } from "react-native";
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native-gesture-handler";
-// import { setOptions } from '../../redux/actions';
 import { useSelector, useDispatch } from "react-redux";
-
-import allActions from '../../redux/actions/index';
 
 const OptionsMenu = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
+    // leaving old hooks as a reference for now, changed to redux below
+
     // distance slider value
-    const [value, setValue] = useState('50');
+    // const [value, setValue] = useState('50');
 
     // price range "from" and "to" $ values
-    const [fromValue, onFromChangeText] = useState('');
-    const [toValue, onToChangeText] = useState('');
+    // const [fromValue, onFromChangeText] = useState('');
+    // const [toValue, onToChangeText] = useState('');
 
     // all filtered options as object
     // const [filteredOptions, applyFilter] = useState({
@@ -41,25 +39,48 @@ const OptionsMenu = () => {
     //     }
     // });
 
-
+    // standard redux dispatch
     const dispatch = useDispatch();
 
-    const opened = useSelector(state => state.modalOpts.isOpen);
-    const closed = useSelector(state => state.modalOpts.isOpen);
+    // destruct from state in root reducer
+    const { distance, priceFrom, priceTo } = useSelector(state => ({
+        ...state.modalFilter
+    }))
 
-
-    // const modalOpen = () => dispatch(isModalOpen());
-
-    function modalOpenedBool() {
+    // distance in miles for search location range
+    function handleDistance(value) {
         dispatch({
-            type: "MODAL_OPENED",
-        });
+            type: "SET_DISTANCE",
+            payload: value
+        })
     }
-
-    function modalClosedBool() {
+    // price range "from" $ value
+    function handlePriceFrom(value) {
         dispatch({
-            type: "MODAL_CLOSED",
+            type: "SET_PRICE_FROM",
+            payload: value
+        })
+    }
+    // price range "to" $ value
+    function handlePriceTo(value) {
+        dispatch({
+            type: "SET_PRICE_TO",
+            payload: value
+        })
+    }
+    // reset state
+    function handleReset() {
+        dispatch({
+            type: "RESET_OPTIONS"
         });
+        console.log(distance, priceFrom, priceTo);
+    }
+    // return state and set values back to initial state
+    function applyFilter() {
+        dispatch({
+            type: "APPLY_FILTER"
+        })
+        console.log(distance, priceFrom, priceTo);
     }
 
     return (
@@ -76,7 +97,8 @@ const OptionsMenu = () => {
                     <View style={styles.modalView}>
                         <View style={styles.innerModalContainer}>
                             <Text style={styles.distanceTextHead}>Distance:</Text>
-                            <Text style={styles.mileageText}>{Math.round(value, 0)} mi</Text>
+                            <Text style={styles.mileageText}>{distance} mi</Text>
+
                             <View style={styles.distanceOption}>
                                 <Slider
                                     minimumValue={1}
@@ -85,10 +107,9 @@ const OptionsMenu = () => {
                                     maximumTractTintColor="#1EB1FC"
                                     step={.1}
                                     value={50}
-                                    onValueChange={value => setValue(value)}
+                                    onValueChange={handleDistance}
                                     style={styles.slider}
                                     thumbTintColor="#1EB1FC"
-                                    onSlidingComplete={() => applyFilter({ ...filteredOptions, distance: Math.round(value, 0) })}
                                 />
                             </View>
 
@@ -108,9 +129,8 @@ const OptionsMenu = () => {
                                 returnKeyType={'done'}
                                 placeholder={'From'}
                                 placeholderTextColor={'black'}
-                                onChangeText={fromValue => onFromChangeText(fromValue)}
-                                value={fromValue}
-                                onEndEditing={() => applyFilter({ ...filteredOptions, from: fromValue })}
+                                onChangeText={handlePriceFrom}
+                                value={priceFrom}
                             />
 
                             <TextInput style={{
@@ -129,22 +149,15 @@ const OptionsMenu = () => {
                                 returnKeyType={'done'}
                                 placeholder={'To'}
                                 placeholderTextColor={'black'}
-                                onChangeText={toValue => onToChangeText(toValue)}
-                                value={toValue}
-                                onEndEditing={() => applyFilter({ ...filteredOptions, to: toValue })}
+                                onChangeText={handlePriceTo}
+                                value={priceTo}
                             />
-                            
+
                             <View style={styles.filterButtons}>
                                 <TouchableHighlight
                                     style={styles.saveButton}
                                     onPress={() => {
-                                        // applyFilter({
-                                        //     ...filteredOptions
-                                        // });
-                                        //dispatch(setOptions.applyFilter(filteredOptions));
-                                        setValue(50);
-                                        onFromChangeText('');
-                                        onToChangeText('');
+                                        applyFilter();
                                         setModalVisible(!modalVisible);
                                     }}
                                 >
@@ -154,13 +167,8 @@ const OptionsMenu = () => {
                                 <TouchableHighlight
                                     style={styles.exitButton}
                                     onPress={() => {
-                                        modalClosedBool();
-                                        setValue(50);
-                                        onFromChangeText('');
-                                        onToChangeText('');
+                                        handleReset();
                                         setModalVisible(!modalVisible);
-                                        // console.log(opened);
-
                                     }}
                                 >
                                     <Text style={styles.textStyle}>Exit</Text>
@@ -168,22 +176,15 @@ const OptionsMenu = () => {
 
                             </View>
                         </View>
-
-
                     </View>
-                    <Text style={{color: 'black', marginTop: 40}}>STATE: {`${closed}`}</Text>
-
                 </View>
             </Modal>
 
             <TouchableOpacity
                 style={styles.openButton}
                 onPress={() => {
-                    // dispatch(allActions.modalOpen(true));
-                    modalOpenedBool();
-                    console.log('highlight clicked: ' + opened);
+                    console.log('highlight clicked');
                     setModalVisible(true);
-
                 }}
             >
                 <Ionicons name={'ios-options'} size={32} color={'white'} />
