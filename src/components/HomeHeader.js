@@ -6,37 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
 
 
-// export default class HomeHeader extends React.Component {
 const HomeHeader = () => {
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         searchQuery: '',
-    //     }
-    // }
-
-    // // handles the ability to type into the SearchBar
-    // updateSearchQuery = searchQuery => {
-    //     this.setState({ searchQuery });
-    // }
-
-    // // clear search
-    // clearSearch = () => {
-    //     this.setState({ searchQuery: '' });
-    //     // this.cancel.search();
-    // }
-
-    // // query some db for items users have posted
-    // queryFindSpecificItem = () => {
-    //     const { searchQuery } = this.state;
-    //     // let myRegex = new RegExp(searchQuery);
-
-    //     console.log(searchQuery);
-
-    //     // clear input form
-    //     this.clearSearch();
-    // }
 
     // standard redux dispatch
     const dispatch = useDispatch();
