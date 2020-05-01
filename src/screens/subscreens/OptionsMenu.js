@@ -200,7 +200,7 @@ const OptionsMenu = () => {
                                     style={styles.exitButton}
                                     onPress={() => {
                                         resetOptions();
-                                        // setModalVisible(!modalVisible);
+                                        setModalVisible(!modalVisible);
                                     }}
                                 >
                                     <Text style={styles.textStyle}>Exit</Text>

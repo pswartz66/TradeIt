@@ -2,7 +2,7 @@
 
 export default function filterOptions (state = { distance: 50, priceFrom: '', priceTo: ''}, action) {
 
-    switch(action.type) {
+    switch (action.type) {
         case "SET_DISTANCE":
             return {
                 ...state,
