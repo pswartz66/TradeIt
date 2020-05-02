@@ -24,9 +24,10 @@ const HomeHeader = () => {
     // submit when return key is pressed on keyboard
     const submitSearch = (event) => {
         // event.stopPropagation();
-        event.preventDefault();
+        // event.preventDefault();
         event.persist();
         dispatch(submit_Query());
+        removeSearch();
         console.log(search)
     }
     // clear search in state

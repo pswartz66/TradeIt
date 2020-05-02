@@ -1,5 +1,9 @@
 
-export default function searchQueries (state = { search: '' }, action) {
+const initialState = {
+    search: ''
+}
+
+export default function searchQueries (state = initialState, action) {
     switch (action.type) {
         case "SEARCH_QUERY":
             return {
