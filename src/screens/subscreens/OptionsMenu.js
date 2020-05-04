@@ -36,8 +36,12 @@ const OptionsMenu = () => {
 
     // destruct from state in root reducer
     const { distance, priceFrom, priceTo } = useSelector(state => ({
-        ...state.filterOptions
+        ...state.filterOptions,
     }))
+
+    const fullState = useSelector(state => ({
+        state
+    }));
 
     // check price range
     const checkPriceRange = () => {
@@ -81,7 +85,8 @@ const OptionsMenu = () => {
     // return state and set values back to initial state
     const applyFilter = () => {
         dispatch(apply_Filter());
-        console.log(distance, priceFrom, priceTo)
+        console.log(fullState);
+        // console.log(distance, priceFrom, priceTo)
     };
     // return state and set values back to initial state
     // function applyFilter() {
@@ -203,7 +208,7 @@ const OptionsMenu = () => {
                                         setModalVisible(!modalVisible);
                                     }}
                                 >
-                                    <Text style={styles.textStyle}>Exit</Text>
+                                    <Text style={styles.textStyle}>Reset</Text>
                                 </TouchableHighlight>
 
                             </View>

@@ -22,9 +22,9 @@ export default function filterOptions (state = { distance: 50, priceFrom: '', pr
             // return updated state then set to initial state
             return {
                 ...state,
-                distance: 50,
-                priceFrom: '',
-                priceTo: ''
+                // distance: 50,
+                // priceFrom: '',
+                // priceTo: ''
             }
         case "RESET_OPTIONS":
             // reset to initial state

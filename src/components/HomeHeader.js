@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
-import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
+import { search_Query, submit_Query, remove_Query, log_State } from '../redux/actions/index';
 
 
 const HomeHeader = () => {
@@ -16,6 +16,10 @@ const HomeHeader = () => {
         ...state.searchQueries
     }))
 
+    const totalState = useSelector(state => ({
+        state
+    }))
+
     // setSearch handles text input entered into search bar
     const setSearch = value => {
         dispatch(search_Query(value));
@@ -24,11 +28,14 @@ const HomeHeader = () => {
     // submit when return key is pressed on keyboard
     const submitSearch = (event) => {
         // event.stopPropagation();
+
         // event.preventDefault();
         event.persist();
         dispatch(submit_Query());
-        removeSearch();
-        console.log(search)
+        // dispatch()
+        console.log(totalState.state)
+        // dispatch(log_State());
+        // removeSearch();
     }
     // clear search in state
     const removeSearch = () => {
