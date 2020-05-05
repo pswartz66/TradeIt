@@ -10,4 +10,6 @@ export const SEARCH_QUERY = "SEARCH_QUERY";
 export const SUBMIT_QUERY = "SUBMIT_QUERY";
 export const REMOVE_QUERY = "REMOVE_QUERY";
 
+// image selection form
+export const SAVE_IMAGE = "SAVE_IMAGE";
 

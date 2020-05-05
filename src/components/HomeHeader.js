@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
-import { search_Query, submit_Query, remove_Query, log_State } from '../redux/actions/index';
+import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
 
 
 const HomeHeader = () => {
@@ -30,6 +30,7 @@ const HomeHeader = () => {
         // event.stopPropagation();
 
         // event.preventDefault();
+        // persist to handle synthetic event
         event.persist();
         dispatch(submit_Query());
         // dispatch()

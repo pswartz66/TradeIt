@@ -1,46 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { useSelector, useDispatch } from "react-redux";
+import { save_Image } from '../redux/actions/index';
 
-export default class ChooseImage extends React.Component {
-    state = {
-        image: null,
-        formEntered: false
-    }
+const ChooseImage = () => {
 
-    render() {
-        let { image } = this.state;
+    // acting similar to class based component's componentDidMount function
+    useEffect(() => {
+        getPermissionAsync();
+    })
 
-        return (
-            <View style={styles.imageContainer}>
-                <TouchableOpacity
-                    title="Choose image from camera roll"
-                    onPress={this._pickImage}
-                    style={{ width: 210, marginTop: 30, backgroundColor: '#0454ab', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, borderRadius: 4,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 2
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 6.84, }}
-                >
-                    <Text style={{ textAlign: 'center', fontSize: 18, color: 'white' }}>
-                        Launch camera roll
-                    </Text>
-                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
-    componentDidMount() {
-        this.getPermissionAsync();
-    }
-
-    getPermissionAsync = async () => {
+    const getPermissionAsync = async () => {
         // currently only supporting ios
         if (Constants.platform.ios) {
             const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -54,7 +27,7 @@ export default class ChooseImage extends React.Component {
     // for testing purposes let just use one image
     // can be modified using react hooks and camera roll from react-native
     // rather than using expo-image-picker
-    _pickImage = async () => {
+    const _pickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -63,7 +36,9 @@ export default class ChooseImage extends React.Component {
                 quality: 1,
             });
             if (!result.cancelled) {
-                this.setState({ image: result.uri });
+                // console.log(result);
+
+                saveImage(result.uri);
 
                 // when image gets selected
                 // create a form view for entering the title, descr, and price
@@ -77,7 +52,60 @@ export default class ChooseImage extends React.Component {
             console.log(err);
         }
     }
+
+
+    // standard redux dispatch
+    const dispatch = useDispatch();
+
+    // test logger to log out state object in its entirety
+    const imageState = useSelector(state => ({
+        state
+    }));
+
+    // destruct from state in root reducer
+    const { images } = useSelector(state => ({
+        ...state.selectImages,
+    }))
+
+    // saves the image selected from camera roll to states images object
+    const saveImage = image => {
+        dispatch(save_Image(image))
+        // log out image path -> images === single image
+        console.log(images)
+    }
+
+    return (
+        <View style={styles.imageContainer}>
+            <TouchableOpacity
+                title="Choose image from camera roll"
+                onPress={_pickImage}
+                style={{
+                    width: 210, marginTop: 30, backgroundColor: '#0454ab', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, borderRadius: 4,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 6.84,
+                }}
+            >
+                <Text style={{ textAlign: 'center', fontSize: 18, color: 'white' }}>
+                    Launch camera roll
+                </Text>
+
+
+                {/* render a modal form here??? for example user selects and image, 
+                    determines a price and description and saves to state??? */}
+                {images ? <Image source={{ uri: images }} style={{ width: 400, height: 400 }} /> : <Image source={{ uri: images }} style={{ width: 200, height: 200 }}/>}
+            </TouchableOpacity>
+        </View>
+    )
+    // }
+
 }
+
+export default ChooseImage;
 
 const styles = StyleSheet.create({
     imageContainer: {
