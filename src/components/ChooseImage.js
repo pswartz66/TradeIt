@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { useSelector, useDispatch } from "react-redux";
 import { save_Image } from '../redux/actions/index';
+import ListingMenu from '../screens/subscreens/ListingMenu';
 
 const ChooseImage = () => {
 
@@ -42,17 +43,17 @@ const ChooseImage = () => {
 
                 // when image gets selected
                 // create a form view for entering the title, descr, and price
-                // <ComponentEntryForm /> 
+                // return (
+                //     <ListingMenu /> 
+                // )
                 // possibly make it a modal? can leverage existing modal...
 
             }
-
             console.log(result);
         } catch (err) {
             console.log(err);
         }
     }
-
 
     // standard redux dispatch
     const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const ChooseImage = () => {
     const saveImage = image => {
         dispatch(save_Image(image))
         // log out image path -> images === single image
-        console.log(images)
+        console.log('this is images \n' + images)
     }
 
     return (
@@ -95,13 +96,15 @@ const ChooseImage = () => {
                 </Text>
 
 
-                {/* render a modal form here??? for example user selects and image, 
-                    determines a price and description and saves to state??? */}
-                {images ? <Image source={{ uri: images }} style={{ width: 400, height: 400 }} /> : <Image source={{ uri: images }} style={{ width: 200, height: 200 }}/>}
             </TouchableOpacity>
+            
+            <ListingMenu />
+            
+            {/* <Image source={{ uri: images }} style={{ width: 200, height: 200 }} /> */}
+
+
         </View>
     )
-    // }
 
 }
 
@@ -114,6 +117,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 40,
         backgroundColor: '#d5e4ed'
-        // width: 100
     }
 })
