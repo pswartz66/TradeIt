@@ -2,17 +2,18 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import HomeHeader from '../components/HomeHeader';
 
-export default class Home extends React.Component {
-    
-    render() {
-        return (
-            <View style={styles.container}>
-                <HomeHeader />
 
-            </View>
-        )
-    }
+const Home = () => {
+
+    return (
+        <View style={styles.container}>
+            <HomeHeader />
+
+        </View>
+    )
 };
+
+export default Home;
 
 const styles = StyleSheet.create({
     container: {

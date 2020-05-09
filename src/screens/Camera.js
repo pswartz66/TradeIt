@@ -2,20 +2,14 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import ChooseImage from '../components/ChooseImage';
 
-export default class Camera extends React.Component {
     
+const Camera = () => {
 
-    render() {
         return (
-            // <View style={styles.container}>
-            //     <Text>
-            //         Camera Screen
-            //     </Text>
-            // </View>
             <ChooseImage />
         )
-    }
-};
+}
+export default Camera;
 
 // const styles = StyleSheet.create({
 //     container: {

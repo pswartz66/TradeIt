@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSelector, useDispatch } from "react-redux";
+import { Image, Text, View, StyleSheet } from 'react-native';
 
-const ListingMenu = () => {
+const ListingMenu = ( props ) => {
 
+    // once image of listing is selected
+    // add a Title
+    // add a Price
+    // add a description
+    // add a location
+    // select a category?
+
+    // set image variable from route params passed in from ChooseImage component
+    let myImage = props.route.params.image.uri;
+
+    // console.log("MENU ",  props);
 
     return (
         <View style={styles.listingModalContainer}>
@@ -13,7 +23,7 @@ const ListingMenu = () => {
                 is there a way to do this in navigation?
             </Text>
             
-            {/* <Image source={{ uri: images }} style={{ width: 200, height: 200 }} /> */}
+            <Image source={{ uri: myImage }} style={{ width: 200, height: 200 }} />
 
         </View>
     )
@@ -27,6 +37,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 40,
-        backgroundColor: '#d5e4ed'
+        // backgroundColor: 'red'
     }
 })

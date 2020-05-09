@@ -5,9 +5,10 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { useSelector, useDispatch } from "react-redux";
 import { save_Image } from '../redux/actions/index';
-import ListingMenu from '../screens/subscreens/ListingMenu';
+// import ListingMenu from '../screens/subscreens/ListingMenu';
 
-const ChooseImage = () => {
+
+const ChooseImage = ({ navigation }) => {
 
     // acting similar to class based component's componentDidMount function
     useEffect(() => {
@@ -41,6 +42,8 @@ const ChooseImage = () => {
 
                 saveImage(result.uri);
 
+                navigateToListing(result);
+
                 // when image gets selected
                 // create a form view for entering the title, descr, and price
                 // return (
@@ -49,7 +52,7 @@ const ChooseImage = () => {
                 // possibly make it a modal? can leverage existing modal...
 
             }
-            console.log(result);
+            // console.log(result);
         } catch (err) {
             console.log(err);
         }
@@ -72,13 +75,22 @@ const ChooseImage = () => {
     const saveImage = image => {
         dispatch(save_Image(image))
         // log out image path -> images === single image
-        console.log('this is images \n' + images)
+        // console.log('this is images \n' + images)
+    }
+
+    // navigate to next screen after image selection
+    const navigateToListing = image => {
+        console.log(image);
+        navigation.navigate("ListingMenu", {
+            image
+        });
     }
 
     return (
         <View style={styles.imageContainer}>
             <TouchableOpacity
                 title="Choose image from camera roll"
+                // onPress={() => navigation.navigate("ListingMenu")}
                 onPress={_pickImage}
                 style={{
                     width: 210, marginTop: 30, backgroundColor: '#0454ab', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, borderRadius: 4,
@@ -95,11 +107,16 @@ const ChooseImage = () => {
                     Launch camera roll
                 </Text>
 
+                
 
             </TouchableOpacity>
-            
-            <ListingMenu />
-            
+
+            {/* <Stack.Navigator>
+                <Stack.Screen name="ListingMenu" component={ListingMenu} />
+            </Stack.Navigator> */}
+
+            {/* <ListingMenu /> */}
+
             {/* <Image source={{ uri: images }} style={{ width: 200, height: 200 }} /> */}
 
 
