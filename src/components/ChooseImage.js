@@ -40,9 +40,11 @@ const ChooseImage = ({ navigation }) => {
             if (!result.cancelled) {
                 // console.log(result);
 
+                // save image to state
                 saveImage(result.uri);
 
-                navigateToListing(result);
+                // once image is saved to redux store navigate to listing menu screen
+                // navigateToListing(result);
 
                 // when image gets selected
                 // create a form view for entering the title, descr, and price
@@ -62,9 +64,9 @@ const ChooseImage = ({ navigation }) => {
     const dispatch = useDispatch();
 
     // test logger to log out state object in its entirety
-    const imageState = useSelector(state => ({
-        state
-    }));
+    // const imageState = useSelector(state => ({
+    //     state
+    // }));
 
     // destruct from state in root reducer
     const { images } = useSelector(state => ({
@@ -76,14 +78,18 @@ const ChooseImage = ({ navigation }) => {
         dispatch(save_Image(image))
         // log out image path -> images === single image
         // console.log('this is images \n' + images)
+        navigateToListing();
     }
 
     // navigate to next screen after image selection
-    const navigateToListing = image => {
-        console.log(image);
-        navigation.navigate("ListingMenu", {
-            image
-        });
+    const navigateToListing = () => {
+        // console.log(image);
+        // console.log(imageState);
+        // let imageArr = imageState.state.selectImages.images;
+
+        // console.log(imageArr);
+
+        navigation.navigate("ListingMenu");
     }
 
     return (
@@ -110,15 +116,6 @@ const ChooseImage = ({ navigation }) => {
                 
 
             </TouchableOpacity>
-
-            {/* <Stack.Navigator>
-                <Stack.Screen name="ListingMenu" component={ListingMenu} />
-            </Stack.Navigator> */}
-
-            {/* <ListingMenu /> */}
-
-            {/* <Image source={{ uri: images }} style={{ width: 200, height: 200 }} /> */}
-
 
         </View>
     )

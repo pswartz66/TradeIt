@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Image, Text, View, StyleSheet, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight, TextInput } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from "react-redux";
 
 const ListingMenu = (props) => {
 
@@ -12,8 +13,21 @@ const ListingMenu = (props) => {
     // add a location
     // select a category?
 
+    // test logger to log out state object in its entirety
+    const imageState = useSelector(state => ({
+        state
+    }));
+
+    // set images Array in state to new variable
+    // this appears to fix the async event issue trying to pass the images down in an
+    // array through navigation props from ChooseImage component.
+    let imageArray = imageState.state.selectImages.images;
+    console.log(imageArray);
+
     // set image variable from route params passed in from ChooseImage component
-    let myImage = props.route.params.image.uri;
+    // let myImage = props.route.params.image.uri;
+    // let allImages = props.route.params.imageArr;
+    // console.log(allImages);
 
     // console.log("MENU ",  props);
 
@@ -25,9 +39,14 @@ const ListingMenu = (props) => {
                 <TouchableHighlight>
                     <Ionicons name="ios-add-circle" size={20} />
                 </TouchableHighlight>
+
+                {/* make imagesInPane flex -> scrollable to right when larger than screen */}
+                {imageArray.map((image, key) => 
+                <Image source={{ uri: image }} style={styles.imagesInPane} key={image}/>
+                )}
+                {/* <Image source={{ uri: myImage }} style={styles.imagesInPane} />
                 <Image source={{ uri: myImage }} style={styles.imagesInPane} />
-                <Image source={{ uri: myImage }} style={styles.imagesInPane} />
-                <Image source={{ uri: myImage }} style={styles.imagesInPane} />
+                <Image source={{ uri: myImage }} style={styles.imagesInPane} /> */}
 
             </View>
 
@@ -49,7 +68,7 @@ const ListingMenu = (props) => {
                     returnKeyType={'done'}
                     placeholder={'Add a description...'}
                     placeholderTextColor={'black'}
-                    multiline={true}
+                    // multiline={true}
                     numberOfLines={3}
                 // onChangeText={}
                 // value={}
