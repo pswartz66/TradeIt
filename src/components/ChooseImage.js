@@ -43,16 +43,6 @@ const ChooseImage = ({ navigation }) => {
                 // save image to state
                 saveImage(result.uri);
 
-                // once image is saved to redux store navigate to listing menu screen
-                // navigateToListing(result);
-
-                // when image gets selected
-                // create a form view for entering the title, descr, and price
-                // return (
-                //     <ListingMenu /> 
-                // )
-                // possibly make it a modal? can leverage existing modal...
-
             }
             // console.log(result);
         } catch (err) {
@@ -75,10 +65,18 @@ const ChooseImage = ({ navigation }) => {
 
     // saves the image selected from camera roll to states images object
     const saveImage = image => {
-        dispatch(save_Image(image))
-        // log out image path -> images === single image
-        // console.log('this is images \n' + images)
-        navigateToListing();
+
+        if (images.length < 5) {
+            dispatch(save_Image(image))
+            // log out image path -> images === single image
+            // console.log('this is images \n' + images)
+            navigateToListing();
+        } else {
+            navigateToListing();
+
+        }
+
+
     }
 
     // navigate to next screen after image selection
@@ -113,7 +111,7 @@ const ChooseImage = ({ navigation }) => {
                     Launch camera roll
                 </Text>
 
-                
+
 
             </TouchableOpacity>
 

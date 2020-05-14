@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, StyleSheet, Button } from 'react-native';
+import { Image, Text, View, StyleSheet, ImageBackground, ScrollView, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight, TextInput } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
@@ -24,6 +24,8 @@ const ListingMenu = (props) => {
     let imageArray = imageState.state.selectImages.images;
     console.log(imageArray);
 
+    let paneArray = new Array(5);
+
     // set image variable from route params passed in from ChooseImage component
     // let myImage = props.route.params.image.uri;
     // let allImages = props.route.params.imageArr;
@@ -33,21 +35,18 @@ const ListingMenu = (props) => {
 
     return (
         <View style={styles.listingModalContainer}>
+            <View style={styles.imagesPane} >
+                <ScrollView horizontal={true} style={styles.imagesScrollPane}>
+                    {imageArray.map((image, key) =>
+                        <>
+                            <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
+                                <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
+                            </ImageBackground>
+                        </>
+                    )}
 
-            <View style={styles.imagesPane}>
 
-                <TouchableHighlight>
-                    <Ionicons name="ios-add-circle" size={20} />
-                </TouchableHighlight>
-
-                {/* make imagesInPane flex -> scrollable to right when larger than screen */}
-                {imageArray.map((image, key) => 
-                <Image source={{ uri: image }} style={styles.imagesInPane} key={image}/>
-                )}
-                {/* <Image source={{ uri: myImage }} style={styles.imagesInPane} />
-                <Image source={{ uri: myImage }} style={styles.imagesInPane} />
-                <Image source={{ uri: myImage }} style={styles.imagesInPane} /> */}
-
+                </ScrollView>
             </View>
 
             <View style={styles.imageInputForm}>
@@ -74,8 +73,6 @@ const ListingMenu = (props) => {
                 // value={}
                 />
             </View>
-
-
         </View>
     )
 }
@@ -85,28 +82,33 @@ export default ListingMenu;
 const styles = StyleSheet.create({
     listingModalContainer: {
         flex: 1,
-        // justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
-        // height: 40,
-        // backgroundColor: 'red'
+        height: 40,
+        height: '100%',
+        backgroundColor: 'red'
+    },
+    imagesScrollPane: {
+        flex: 1,
+        // width: '100%',
+        backgroundColor: '#e8e8e8'
     },
     imagesPane: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-start',
         marginTop: 10,
-        height: 100,
         width: '100%',
         backgroundColor: '#e8e8e8'
     },
     imagesInPane: {
-        // flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         margin: 10,
         height: 75,
         width: 75,
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: 'yellow'
     },
     formLabels: {
         color: 'black',
@@ -115,11 +117,9 @@ const styles = StyleSheet.create({
     },
     imageInputForm: {
         flex: 1,
-        justifyContent: 'flex-start',
         alignItems: 'center',
         margin: 0,
         height: '100%',
         width: '100%',
-        // backgroundColor: ''
     }
 })
