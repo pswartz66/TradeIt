@@ -3,6 +3,7 @@ import { Image, Text, View, StyleSheet, ImageBackground, ScrollView, Button } fr
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight, TextInput } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
+import Map from '../../components/Map';
 
 const ListingMenu = (props) => {
 
@@ -32,6 +33,14 @@ const ListingMenu = (props) => {
     // console.log(allImages);
 
     // console.log("MENU ",  props);
+
+    // A placeholder until we get our own location
+    const region = {
+        latitude: 37.321996988,
+        longitude: -122.0325472123455,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+    }
 
     return (
         <View style={styles.listingModalContainer}>
@@ -119,8 +128,10 @@ const ListingMenu = (props) => {
 
                 <View style={styles.locationInputForm}>
                     <Text style={styles.formLabels}>Location</Text>
-                    <TextInput style={{
-                        height: 100,
+                    <Map />
+
+                    {/* <TextInput style={{
+                        height: 450,
                         width: '100%',
                         backgroundColor: '#e8e8e8',
                         borderRadius: 6,
@@ -133,10 +144,10 @@ const ListingMenu = (props) => {
                         keyboardAppearance={'light'}
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
-                        placeholder={'Choose a location...'}
+                        placeholder={'Decribe the item you want trade'}
                         placeholderTextColor={'black'}
-                        numberOfLines={1}
-                    />
+                        numberOfLines={3}
+                    /> */}
                 </View>
             </ScrollView>
         </View>
@@ -155,7 +166,7 @@ const styles = StyleSheet.create({
     imagesScrollPane: {
         flex: 1,
         backgroundColor: '#e8e8e8',
-        
+
     },
     imagesPane: {
         flexDirection: 'row',
@@ -164,7 +175,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         width: '100%',
         backgroundColor: '#e8e8e8',
-        
+
     },
     imagesInPane: {
         justifyContent: 'center',
