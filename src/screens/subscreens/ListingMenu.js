@@ -35,7 +35,7 @@ const ListingMenu = (props) => {
 
     return (
         <View style={styles.listingModalContainer}>
-            <View style={styles.imagesPane} >
+            <View style={styles.imagesPane}>
                 <ScrollView horizontal={true} style={styles.imagesScrollPane}>
                     {imageArray.map((image, key) =>
                         <>
@@ -49,30 +49,96 @@ const ListingMenu = (props) => {
                 </ScrollView>
             </View>
 
-            <View style={styles.imageInputForm}>
-                <Text style={styles.formLabels}>Description:</Text>
-                <TextInput style={{
-                    height: 100,
-                    width: '90%',
-                    backgroundColor: '#e8e8e8',
-                    borderRadius: 6,
-                    padding: 8,
-                    fontSize: 18,
-                    fontWeight: "400",
-                    marginTop: 14
-                }}
-                    keyboardType={'ascii-capable'}
-                    keyboardAppearance={'light'}
-                    clearButtonMode={'while-editing'}
-                    returnKeyType={'done'}
-                    placeholder={'Add a description...'}
-                    placeholderTextColor={'black'}
-                    // multiline={true}
-                    numberOfLines={3}
-                // onChangeText={}
-                // value={}
-                />
-            </View>
+            <ScrollView style={styles.imageInputFormBackground}>
+                <View style={styles.titleInputForm}>
+                    <Text style={styles.formLabels}>Title</Text>
+                    <TextInput style={{
+                        height: 46,
+                        width: '100%',
+                        backgroundColor: '#e8e8e8',
+                        borderRadius: 6,
+                        padding: 8,
+                        fontSize: 18,
+                        fontWeight: "400",
+                        marginTop: 8
+                    }}
+                        keyboardType={'ascii-capable'}
+                        keyboardAppearance={'light'}
+                        clearButtonMode={'while-editing'}
+                        returnKeyType={'done'}
+                        placeholder={'*Give your item a title...'}
+                        placeholderTextColor={'black'}
+                        // multiline={true}
+                        numberOfLines={1}
+                    />
+                </View>
+
+                <View style={styles.priceInputForm}>
+                    <Text style={styles.formLabels}>Price</Text>
+                    <TextInput style={{
+                        height: 46,
+                        width: '100%',
+                        backgroundColor: '#e8e8e8',
+                        borderRadius: 6,
+                        padding: 8,
+                        fontSize: 18,
+                        fontWeight: "400",
+                        marginTop: 8
+                    }}
+                        keyboardType={'numeric'}
+                        keyboardAppearance={'light'}
+                        clearButtonMode={'while-editing'}
+                        returnKeyType={'done'}
+                        placeholder={'*Enter a reasonable price...'}
+                        placeholderTextColor={'black'}
+                        numberOfLines={1}
+                    />
+                </View>
+
+                <View style={styles.descInputForm}>
+                    <Text style={styles.formLabels}>Description</Text>
+                    <TextInput style={{
+                        height: 90,
+                        width: '100%',
+                        backgroundColor: '#e8e8e8',
+                        borderRadius: 6,
+                        padding: 8,
+                        fontSize: 18,
+                        fontWeight: "400",
+                        marginTop: 8
+                    }}
+                        keyboardType={'ascii-capable'}
+                        keyboardAppearance={'light'}
+                        clearButtonMode={'while-editing'}
+                        returnKeyType={'done'}
+                        placeholder={'Decribe the item you want trade'}
+                        placeholderTextColor={'black'}
+                        numberOfLines={3}
+                    />
+                </View>
+
+                <View style={styles.locationInputForm}>
+                    <Text style={styles.formLabels}>Location</Text>
+                    <TextInput style={{
+                        height: 100,
+                        width: '100%',
+                        backgroundColor: '#e8e8e8',
+                        borderRadius: 6,
+                        padding: 8,
+                        fontSize: 18,
+                        fontWeight: "400",
+                        marginTop: 8
+                    }}
+                        keyboardType={'ascii-capable'}
+                        keyboardAppearance={'light'}
+                        clearButtonMode={'while-editing'}
+                        returnKeyType={'done'}
+                        placeholder={'Choose a location...'}
+                        placeholderTextColor={'black'}
+                        numberOfLines={1}
+                    />
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -84,22 +150,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 40,
-        height: '100%',
-        backgroundColor: 'red'
+        backgroundColor: 'white'
     },
     imagesScrollPane: {
         flex: 1,
-        // width: '100%',
-        backgroundColor: '#e8e8e8'
+        backgroundColor: '#e8e8e8',
+        
     },
     imagesPane: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginTop: 10,
+        marginTop: 0,
         width: '100%',
-        backgroundColor: '#e8e8e8'
+        backgroundColor: '#e8e8e8',
+        
     },
     imagesInPane: {
         justifyContent: 'center',
@@ -108,18 +173,46 @@ const styles = StyleSheet.create({
         height: 75,
         width: 75,
         borderRadius: 10,
-        backgroundColor: 'yellow'
+        backgroundColor: 'yellow',
+        shadowColor: "black",
+        shadowOpacity: .4,
+        shadowRadius: 8,
+        shadowOffset: {
+            height: 5,
+            width: 0
+        }
     },
     formLabels: {
-        color: 'black',
-        fontSize: 22,
-        marginTop: 10
+        color: '#2196F3',
+        fontSize: 20,
+        marginTop: 2,
+        marginLeft: 4,
+        fontWeight: '500',
+        letterSpacing: 0.4
     },
-    imageInputForm: {
+    imageInputFormBackground: {
         flex: 1,
-        alignItems: 'center',
-        margin: 0,
-        height: '100%',
         width: '100%',
+        backgroundColor: '#3c4b52'
+    },
+    titleInputForm: {
+        borderRadius: 4,
+        margin: 10,
+        backgroundColor: '#3c4b52'
+    },
+    priceInputForm: {
+        borderRadius: 4,
+        margin: 10,
+        backgroundColor: '#3c4b52'
+    },
+    descInputForm: {
+        borderRadius: 4,
+        margin: 10,
+        backgroundColor: '#3c4b52'
+    },
+    locationInputForm: {
+        borderRadius: 4,
+        margin: 10,
+        backgroundColor: '#3c4b52'
     }
 })
