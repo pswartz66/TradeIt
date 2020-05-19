@@ -23,7 +23,6 @@ const CameraStackScreen = () => (
     <CameraStack.Navigator>
         <CameraStack.Screen name="ChooseImage" component={ChooseImage} />
         <CameraStack.Screen name="ListingMenu" component={ListingMenu} />
-
     </CameraStack.Navigator>
 )
 

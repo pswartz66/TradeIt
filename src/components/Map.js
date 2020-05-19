@@ -17,6 +17,7 @@ const Map = (props) => {
     )
 }
 
+
 export default Map;
 
 const styles = {

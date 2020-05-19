@@ -1,18 +1,11 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, StyleSheet, ImageBackground, ScrollView, Button } from 'react-native';
+import { Image, Text, View, StyleSheet, ImageBackground, ScrollView, Button, Keyboard } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight, TextInput } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
 import Map from '../../components/Map';
 
 const ListingMenu = (props) => {
-
-    // once image of listing is selected
-    // add a Title
-    // add a Price
-    // add a description
-    // add a location
-    // select a category?
 
     // test logger to log out state object in its entirety
     const imageState = useSelector(state => ({
@@ -25,14 +18,21 @@ const ListingMenu = (props) => {
     let imageArray = imageState.state.selectImages.images;
     console.log(imageArray);
 
+    // create empty array of length 5
     let paneArray = new Array(5);
+    // array to be filled/condensed 
+    let shortenedArray = [];
 
-    // set image variable from route params passed in from ChooseImage component
-    // let myImage = props.route.params.image.uri;
-    // let allImages = props.route.params.imageArr;
-    // console.log(allImages);
-
-    // console.log("MENU ",  props);
+    for (let i = 0; i < paneArray.length; i++) {
+        if (imageArray[i] == null) {
+            console.log('blank was reached at position ' + i)
+            paneArray[i] = "X";
+            shortenedArray[i] = "X"
+            break;
+        } else {
+            shortenedArray[i] = imageArray[i]
+        }
+    }
 
     // A placeholder until we get our own location
     const region = {
@@ -42,16 +42,41 @@ const ListingMenu = (props) => {
         longitudeDelta: 0.0421
     }
 
+    // image selection
+    const _addImage = async () => {
+        console.log('route to camera roll again')
+    }
+
     return (
         <View style={styles.listingModalContainer}>
             <View style={styles.imagesPane}>
                 <ScrollView horizontal={true} style={styles.imagesScrollPane}>
-                    {imageArray.map((image, key) =>
-                        <>
-                            <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
-                                <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
-                            </ImageBackground>
-                        </>
+                    {shortenedArray.map((image, key) => {
+                        if (image === 'X') {
+                            return (
+                                // return imageAdd highlight/button
+                                <>
+                                    <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesNotInPane} key={image}>
+                                        <TouchableHighlight
+                                            onPress={_addImage}    
+                                        >
+                                            <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
+                                        </TouchableHighlight>
+                                    </ImageBackground>
+                                </>
+                            )
+                        } else {
+                            return (
+                                // return the image selected
+                                <>
+                                    <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
+                                    
+                                    </ImageBackground>
+                                </>
+                            )
+                        }
+                    }
+
                     )}
 
 
@@ -60,14 +85,14 @@ const ListingMenu = (props) => {
 
             <ScrollView style={styles.imageInputFormBackground}>
                 <View style={styles.titleInputForm}>
-                    <Text style={styles.formLabels}>Title</Text>
+                    <Text style={styles.formLabels}>*Title of your trade</Text>
                     <TextInput style={{
                         height: 46,
                         width: '100%',
                         backgroundColor: '#e8e8e8',
                         borderRadius: 6,
                         padding: 8,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: "400",
                         marginTop: 8
                     }}
@@ -77,28 +102,27 @@ const ListingMenu = (props) => {
                         returnKeyType={'done'}
                         placeholder={'*Give your item a title...'}
                         placeholderTextColor={'black'}
-                        // multiline={true}
                         numberOfLines={1}
                     />
                 </View>
 
                 <View style={styles.priceInputForm}>
-                    <Text style={styles.formLabels}>Price</Text>
+                    <Text style={styles.formLabels}>*What are you looking to trade for?</Text>
                     <TextInput style={{
                         height: 46,
                         width: '100%',
                         backgroundColor: '#e8e8e8',
                         borderRadius: 6,
                         padding: 8,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: "400",
                         marginTop: 8
                     }}
-                        keyboardType={'numeric'}
+                        keyboardType={'ascii-capable'}
                         keyboardAppearance={'light'}
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
-                        placeholder={'*Enter a reasonable price...'}
+                        placeholder={'*Name something specific.'}
                         placeholderTextColor={'black'}
                         numberOfLines={1}
                     />
@@ -112,7 +136,7 @@ const ListingMenu = (props) => {
                         backgroundColor: '#e8e8e8',
                         borderRadius: 6,
                         padding: 8,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: "400",
                         marginTop: 8
                     }}
@@ -122,7 +146,8 @@ const ListingMenu = (props) => {
                         returnKeyType={'done'}
                         placeholder={'Decribe the item you want trade'}
                         placeholderTextColor={'black'}
-                        numberOfLines={3}
+                        multiline={true}
+                        onSubmitEditing={Keyboard.dismiss}
                     />
                 </View>
 
@@ -184,7 +209,6 @@ const styles = StyleSheet.create({
         height: 75,
         width: 75,
         borderRadius: 10,
-        backgroundColor: 'yellow',
         shadowColor: "black",
         shadowOpacity: .4,
         shadowRadius: 8,
@@ -192,6 +216,18 @@ const styles = StyleSheet.create({
             height: 5,
             width: 0
         }
+    },
+    imagesNotInPane: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 10,
+        height: 75,
+        width: 75,
+        borderRadius: 10,
+        borderStyle: 'dotted',
+        borderWidth: 1,
+        borderColor: 'gray',
+        backgroundColor: "#f2f2f2"
     },
     formLabels: {
         color: '#2196F3',
