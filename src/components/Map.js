@@ -25,6 +25,7 @@ const styles = {
         // flex: 1,
         height: 200,
         width: '100%',
-        borderRadius: 4
+        borderRadius: 4,
+        marginTop: 8
     }
 }

@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, StyleSheet, ImageBackground, ScrollView, Button, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Keyboard } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TouchableHighlight, TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import { save_Image, remove_Image } from '../../redux/actions/index';
 import Map from '../../components/Map';
 
 const ListingMenu = (props) => {
@@ -42,10 +46,82 @@ const ListingMenu = (props) => {
         longitudeDelta: 0.0421
     }
 
+    // handle image selector async here, grabbed from chooseimage component
+    // acting similar to class based component's componentDidMount function
+    useEffect(() => {
+        getPermissionAsync();
+    })
+
+    const getPermissionAsync = async () => {
+        // currently only supporting ios
+        if (Constants.platform.ios) {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            if (status !== 'granted') {
+                alert('To view photos adjust camera roll permissions in settings.')
+            }
+        }
+    };
+
+    // cannot handle multiple image selection
+    // for testing purposes let just use one image
+    // can be modified using react hooks and camera roll from react-native
+    // rather than using expo-image-picker
+
     // image selection
     const _addImage = async () => {
         console.log('route to camera roll again')
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+            if (!result.cancelled) {
+                // console.log(result);
+
+                // save image to state
+                saveImage(result.uri);
+
+            }
+            // console.log(result);
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+    // standard redux dispatch
+    const dispatch = useDispatch();
+
+    // test logger to log out state object in its entirety
+    // const imageState = useSelector(state => ({
+    //     state
+    // }));
+
+    // destruct from state in root reducer
+    const { images } = useSelector(state => ({
+        ...state.selectImages,
+    }))
+
+    // saves the image selected from camera roll to states images object
+    const saveImage = image => {
+        if (images.length < 5) {
+            dispatch(save_Image(image))
+        }
+    }
+
+
+    
+    // ERROR IN CODE HERE NSMUTABLE ERR -> TO BE FIXED
+    const _removeImage = image => {
+        
+        // dispatch(remove_Image(image));
+        console.log(image);
+        
+        let result = imageArray.filter(anImage => anImage !== image)
+        dispatch(remove_Image(result))
+    }
+
 
     return (
         <View style={styles.listingModalContainer}>
@@ -55,23 +131,29 @@ const ListingMenu = (props) => {
                         if (image === 'X') {
                             return (
                                 // return imageAdd highlight/button
-                                <>
-                                    <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesNotInPane} key={image}>
-                                        <TouchableHighlight
-                                            onPress={_addImage}    
-                                        >
-                                            <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
-                                        </TouchableHighlight>
-                                    </ImageBackground>
-                                </>
+                                <TouchableOpacity
+                                    onPress={_addImage}
+                                >
+                                    <View source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesNotInPane} key={image}>
+
+                                        <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
+                                    </View>
+                                </TouchableOpacity>
                             )
                         } else {
                             return (
                                 // return the image selected
                                 <>
-                                    <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
-                                    
-                                    </ImageBackground>
+                                    <TouchableOpacity
+                                        
+                                        onPress={() => _removeImage(image)}
+                                    >
+                                        <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
+                                            <View style={styles.closeBtn}>
+                                                <Ionicons name="ios-close-circle" size={20} color={'#223c52'} />
+                                            </View>
+                                        </ImageBackground>
+                                    </TouchableOpacity>
                                 </>
                             )
                         }
@@ -261,5 +343,12 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         margin: 10,
         backgroundColor: '#3c4b52'
+    },
+    closeBtn: {
+        height: 88,
+        width: 88,
+        // paddingRight: 20,
+        // paddingBottom: 40,
+        // backgroundColor: 'red'
     }
 })

@@ -1,12 +1,17 @@
 
-export default function selectImages (state = { images: [] }, action) {
+export default function selectImages(state = { images: [] }, action) {
     switch (action.type) {
         case "SAVE_IMAGE":
             return {
                 ...state,
                 images: [...state.images, action.payload]
             }
-        default: 
+        case "REMOVE_IMAGE":
+            return {
+                ...state,
+                images: [...state.images, action.payload]
+            }
+        default:
             return state;
     }
 }

@@ -72,6 +72,7 @@ const ChooseImage = ({ navigation }) => {
             // console.log('this is images \n' + images)
             navigateToListing();
         } else {
+            // else nagivate regardless of outcome
             navigateToListing();
 
         }

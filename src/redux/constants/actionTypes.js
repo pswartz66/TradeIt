@@ -12,4 +12,6 @@ export const REMOVE_QUERY = "REMOVE_QUERY";
 
 // image selection form
 export const SAVE_IMAGE = "SAVE_IMAGE";
+export const REMOVE_IMAGE = "REMOVE_IMAGE";
+
 

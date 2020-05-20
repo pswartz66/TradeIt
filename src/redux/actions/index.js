@@ -12,6 +12,7 @@ import { REMOVE_QUERY } from '../constants/actionTypes';
 
 // image selection form
 import { SAVE_IMAGE } from '../constants/actionTypes';
+import { REMOVE_IMAGE } from '../constants/actionTypes';
 
 // modal options filter section
 export const set_Distance = (value) => ({
@@ -50,5 +51,10 @@ export const remove_Query = () => ({
 // image selection form
 export const save_Image = (image) => ({
     type: SAVE_IMAGE,
+    payload: image
+})
+// removes image from pane
+export const remove_Image = (image) => ({
+    type: REMOVE_IMAGE,
     payload: image
 })
