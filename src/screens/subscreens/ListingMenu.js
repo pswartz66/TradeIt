@@ -20,7 +20,7 @@ const ListingMenu = (props) => {
     // this appears to fix the async event issue trying to pass the images down in an
     // array through navigation props from ChooseImage component.
     let imageArray = imageState.state.selectImages.images;
-    console.log(imageArray);
+    // console.log(imageArray);
 
     // create empty array of length 5
     let paneArray = new Array(5);
@@ -29,7 +29,7 @@ const ListingMenu = (props) => {
 
     for (let i = 0; i < paneArray.length; i++) {
         if (imageArray[i] == null) {
-            console.log('blank was reached at position ' + i)
+            // console.log('blank was reached at position ' + i)
             paneArray[i] = "X";
             shortenedArray[i] = "X"
             break;
@@ -69,7 +69,6 @@ const ListingMenu = (props) => {
 
     // image selection
     const _addImage = async () => {
-        console.log('route to camera roll again')
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -110,18 +109,15 @@ const ListingMenu = (props) => {
         }
     }
 
-
-    
-    // ERROR IN CODE HERE NSMUTABLE ERR -> TO BE FIXED
-    const _removeImage = image => {
-        
-        // dispatch(remove_Image(image));
-        console.log(image);
-        
+    const _removeImage = async (image) => {
+        // filter initial images array down to images array minus removed image
         let result = imageArray.filter(anImage => anImage !== image)
+
+        // dispatch the filtered result as an array in a payload -> see redux select image
+        // NSMutableArray was bc we were modifying state which was already an array
+        // cannot pass an array inside another array while spreading state inside the array etc..
         dispatch(remove_Image(result))
     }
-
 
     return (
         <View style={styles.listingModalContainer}>

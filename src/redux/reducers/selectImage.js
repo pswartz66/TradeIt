@@ -9,7 +9,7 @@ export default function selectImages(state = { images: [] }, action) {
         case "REMOVE_IMAGE":
             return {
                 ...state,
-                images: [...state.images, action.payload]
+                images: action.payload
             }
         default:
             return state;
