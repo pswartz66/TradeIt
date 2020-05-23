@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, ImageBackground, ScrollView, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Keyboard, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -119,6 +119,14 @@ const ListingMenu = (props) => {
         dispatch(remove_Image(result))
     }
 
+    // submitTrade function will send your trade to home page
+    // for all users to see
+    const submitTrade = () => {
+        console.log('trade was submitted');
+        // save trade to state &&
+        // navigate to home page
+    }
+
     return (
         <View style={styles.listingModalContainer}>
             <View style={styles.imagesPane}>
@@ -141,7 +149,7 @@ const ListingMenu = (props) => {
                                 // return the image selected
                                 <>
                                     <TouchableOpacity
-                                        
+
                                         onPress={() => _removeImage(image)}
                                     >
                                         <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
@@ -252,6 +260,12 @@ const ListingMenu = (props) => {
                         numberOfLines={3}
                     /> */}
                 </View>
+                <TouchableOpacity onPress={submitTrade}>
+                    <View style={styles.submitBtn}>
+                        <Text style={styles.submitBtnText}>Submit Trade</Text>
+                    </View>
+                </TouchableOpacity>
+
             </ScrollView>
         </View>
     )
@@ -346,5 +360,20 @@ const styles = StyleSheet.create({
         // paddingRight: 20,
         // paddingBottom: 40,
         // backgroundColor: 'red'
+    },
+    submitBtn: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 5,
+        margin: 10,
+        borderRadius: 4,
+        height: 40,
+        backgroundColor: '#3bb535'
+    },
+    submitBtnText: {
+        color: 'white',
+        fontSize: 18,
+        letterSpacing: 0.4
     }
 })
