@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Keyboard, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TextInput, TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { save_Image, remove_Image } from '../../redux/actions/index';
+import { save_Image, remove_Image, add_Forms } from '../../redux/actions/index';
 import Map from '../../components/Map';
+import { set_Title, set_WhatFor, set_Description, submit_Trade } from '../../redux/actions/index';
 
 const ListingMenu = (props) => {
 
@@ -92,11 +93,6 @@ const ListingMenu = (props) => {
     // standard redux dispatch
     const dispatch = useDispatch();
 
-    // test logger to log out state object in its entirety
-    // const imageState = useSelector(state => ({
-    //     state
-    // }));
-
     // destruct from state in root reducer
     const { images } = useSelector(state => ({
         ...state.selectImages,
@@ -123,9 +119,19 @@ const ListingMenu = (props) => {
     // for all users to see
     const submitTrade = () => {
         console.log('trade was submitted');
+        dispatch(submit_Trade())
+        console.log(imageState);
         // save trade to state &&
         // navigate to home page
+        // render a bunch of items to the home page
+        // sort by most recent || most convienent to the user??
     }
+
+    // get text from input forms and update state
+    // to be reloaded on main page
+    const setTitle = value => dispatch(set_Title(value));
+    const setWhatFor = value => dispatch(set_WhatFor(value));
+    const setDescription = value => dispatch(set_Description(value));
 
     return (
         <View style={styles.listingModalContainer}>
@@ -137,10 +143,11 @@ const ListingMenu = (props) => {
                                 // return imageAdd highlight/button
                                 <TouchableOpacity
                                     onPress={_addImage}
+                                    key={image.toString()}
                                 >
-                                    <View source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesNotInPane} key={image}>
+                                    <View source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesNotInPane} key={image.toString()}>
 
-                                        <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} />
+                                        <Ionicons name="ios-add-circle" size={24} color={'#2196F3'} key={image.toString()}/>
                                     </View>
                                 </TouchableOpacity>
                             )
@@ -149,12 +156,12 @@ const ListingMenu = (props) => {
                                 // return the image selected
                                 <>
                                     <TouchableOpacity
-
                                         onPress={() => _removeImage(image)}
+                                        key={image.toString()}
                                     >
-                                        <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image}>
-                                            <View style={styles.closeBtn}>
-                                                <Ionicons name="ios-close-circle" size={20} color={'#223c52'} />
+                                        <ImageBackground source={{ uri: image }} imageStyle={{ borderRadius: 10 }} style={styles.imagesInPane} key={image.toString()}>
+                                            <View style={styles.closeBtn} key={image.toString()}>
+                                                <Ionicons name="ios-close-circle" size={20} color={'#223c52'} key={image.toString()}/>
                                             </View>
                                         </ImageBackground>
                                     </TouchableOpacity>
@@ -189,6 +196,7 @@ const ListingMenu = (props) => {
                         placeholder={'*Give your item a title...'}
                         placeholderTextColor={'black'}
                         numberOfLines={1}
+                        onChangeText={setTitle}
                     />
                 </View>
 
@@ -211,6 +219,7 @@ const ListingMenu = (props) => {
                         placeholder={'*Name something specific.'}
                         placeholderTextColor={'black'}
                         numberOfLines={1}
+                        onChangeText={setWhatFor}
                     />
                 </View>
 
@@ -234,6 +243,7 @@ const ListingMenu = (props) => {
                         placeholderTextColor={'black'}
                         multiline={true}
                         onSubmitEditing={Keyboard.dismiss}
+                        onChangeText={setDescription}
                     />
                 </View>
 

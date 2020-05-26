@@ -80,7 +80,20 @@ const HomeHeader = () => {
                 </View>
 
 
+                {/*  Render the homepage content here  */}
+                {/* <View>
+                        <HomeContent />
+                    </View
+                */}
+
+                {/* placeholder below */}
+                <Text>
+                    Hello
+                </Text>
+
             </View>
+
+
         </View>
 
     )

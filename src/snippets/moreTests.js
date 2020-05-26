@@ -1,0 +1,2 @@
+
+const someItems = ['trek bicycle'];

@@ -14,6 +14,12 @@ import { REMOVE_QUERY } from '../constants/actionTypes';
 import { SAVE_IMAGE } from '../constants/actionTypes';
 import { REMOVE_IMAGE } from '../constants/actionTypes';
 
+// listing menu forms
+import { SET_TITLE } from '../constants/actionTypes';
+import { SET_WHATFOR } from '../constants/actionTypes';
+import { SET_DESCRIPTION } from '../constants/actionTypes';
+import { SUBMIT_TRADE } from '../constants/actionTypes';
+
 // modal options filter section
 export const set_Distance = (value) => ({
     type: SET_DISTANCE,
@@ -57,4 +63,21 @@ export const save_Image = (image) => ({
 export const remove_Image = (image) => ({
     type: REMOVE_IMAGE,
     payload: image
+})
+
+// listing menu forms section
+export const set_Title = (value) => ({
+    type: SET_TITLE,
+    payload: value
+})
+export const set_WhatFor = (value) => ({
+    type: SET_WHATFOR,
+    payload: value
+})
+export const set_Description = (value) => ({
+    type: SET_DESCRIPTION,
+    payload: value
+})
+export const submit_Trade = () => ({
+    type: SUBMIT_TRADE
 })
