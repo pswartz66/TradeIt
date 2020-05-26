@@ -6,9 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { save_Image, remove_Image, add_Forms } from '../../redux/actions/index';
+import { save_Image, 
+        remove_Image,
+        set_Title, 
+        set_WhatFor, 
+        set_Description, 
+        submit_Trade  } from '../../redux/actions/index';
 import Map from '../../components/Map';
-import { set_Title, set_WhatFor, set_Description, submit_Trade } from '../../redux/actions/index';
+import { } from '../../redux/actions/index';
 
 const ListingMenu = (props) => {
 
