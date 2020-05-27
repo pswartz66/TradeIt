@@ -254,7 +254,8 @@ const ListingMenu = (props) => {
 
                 <View style={styles.locationInputForm}>
                     <Text style={styles.formLabels}>Location</Text>
-                    <Map />
+
+                    {/* <Map /> */}
 
                     {/* <TextInput style={{
                         height: 450,

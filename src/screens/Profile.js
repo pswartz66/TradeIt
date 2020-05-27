@@ -10,7 +10,6 @@ import {
 import { ListItem, Image } from 'react-native-elements';
 
 
-
 export default class Profile extends React.Component {
 
     // sample data for now, will contain images of products traded
