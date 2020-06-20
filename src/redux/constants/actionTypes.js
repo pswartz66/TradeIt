@@ -16,7 +16,6 @@ export const REMOVE_IMAGE = "REMOVE_IMAGE";
 
 // listing menu forms
 export const SET_TITLE = "SET_TITLE";
-export const SET_WHATFOR = "SET_WHATFOR";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SUBMIT_TRADE = "SUBMIT_TRADE";
 

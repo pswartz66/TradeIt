@@ -9,11 +9,10 @@ import * as Permissions from 'expo-permissions';
 import { save_Image, 
         remove_Image,
         set_Title, 
-        set_WhatFor, 
         set_Description, 
         submit_Trade  } from '../../redux/actions/index';
-import Map from '../../components/Map';
-import { } from '../../redux/actions/index';
+// import Map from '../../components/Map';
+// import { } from '../../redux/actions/index';
 
 const ListingMenu = (props) => {
 
@@ -135,7 +134,6 @@ const ListingMenu = (props) => {
     // get text from input forms and update state
     // to be reloaded on main page
     const setTitle = value => dispatch(set_Title(value));
-    const setWhatFor = value => dispatch(set_WhatFor(value));
     const setDescription = value => dispatch(set_Description(value));
 
     return (
@@ -205,7 +203,7 @@ const ListingMenu = (props) => {
                     />
                 </View>
 
-                <View style={styles.priceInputForm}>
+                {/* <View style={styles.priceInputForm}>
                     <Text style={styles.formLabels}>*What are you looking to trade for?</Text>
                     <TextInput style={{
                         height: 46,
@@ -226,7 +224,7 @@ const ListingMenu = (props) => {
                         numberOfLines={1}
                         onChangeText={setWhatFor}
                     />
-                </View>
+                </View> */}
 
                 <View style={styles.descInputForm}>
                     <Text style={styles.formLabels}>Description</Text>

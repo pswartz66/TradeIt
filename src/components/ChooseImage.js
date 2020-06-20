@@ -112,8 +112,6 @@ const ChooseImage = ({ navigation }) => {
                     Launch camera roll
                 </Text>
 
-
-
             </TouchableOpacity>
 
         </View>

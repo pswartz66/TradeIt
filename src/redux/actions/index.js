@@ -70,10 +70,6 @@ export const set_Title = (value) => ({
     type: SET_TITLE,
     payload: value
 })
-export const set_WhatFor = (value) => ({
-    type: SET_WHATFOR,
-    payload: value
-})
 export const set_Description = (value) => ({
     type: SET_DESCRIPTION,
     payload: value
