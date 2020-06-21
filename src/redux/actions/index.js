@@ -16,8 +16,8 @@ import { REMOVE_IMAGE } from '../constants/actionTypes';
 
 // listing menu forms
 import { SET_TITLE } from '../constants/actionTypes';
-import { SET_WHATFOR } from '../constants/actionTypes';
 import { SET_DESCRIPTION } from '../constants/actionTypes';
+import { SET_PRICE } from '../constants/actionTypes';
 import { SUBMIT_TRADE } from '../constants/actionTypes';
 
 // modal options filter section
@@ -73,6 +73,10 @@ export const set_Title = (value) => ({
 export const set_Description = (value) => ({
     type: SET_DESCRIPTION,
     payload: value
+})
+export const set_Price = (value) => ({
+  type: SET_PRICE,
+  payload: value
 })
 export const submit_Trade = () => ({
     type: SUBMIT_TRADE

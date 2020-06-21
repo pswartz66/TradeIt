@@ -18,6 +18,7 @@ export const REMOVE_IMAGE = "REMOVE_IMAGE";
 export const SET_TITLE = "SET_TITLE";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SUBMIT_TRADE = "SUBMIT_TRADE";
+export const SET_PRICE = "SET_PRICE";
 
 
 

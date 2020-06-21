@@ -10,6 +10,7 @@ import { save_Image,
         remove_Image,
         set_Title, 
         set_Description, 
+        set_Price,
         submit_Trade  } from '../../redux/actions/index';
 // import Map from '../../components/Map';
 // import { } from '../../redux/actions/index';
@@ -135,6 +136,7 @@ const ListingMenu = (props) => {
     // to be reloaded on main page
     const setTitle = value => dispatch(set_Title(value));
     const setDescription = value => dispatch(set_Description(value));
+    const setPrice = value => dispatch(set_Price(value));
 
     return (
         <View style={styles.listingModalContainer}>
@@ -203,8 +205,8 @@ const ListingMenu = (props) => {
                     />
                 </View>
 
-                {/* <View style={styles.priceInputForm}>
-                    <Text style={styles.formLabels}>*What are you looking to trade for?</Text>
+                <View style={styles.priceInputForm}>
+                    <Text style={styles.formLabels}>Price $</Text>
                     <TextInput style={{
                         height: 46,
                         width: '100%',
@@ -215,16 +217,16 @@ const ListingMenu = (props) => {
                         fontWeight: "400",
                         marginTop: 8
                     }}
-                        keyboardType={'ascii-capable'}
+                        keyboardType={'decimal-pad'}
                         keyboardAppearance={'light'}
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
-                        placeholder={'*Name something specific.'}
+                        placeholder={'Enter a reasonable price'}
                         placeholderTextColor={'black'}
                         numberOfLines={1}
-                        onChangeText={setWhatFor}
+                        onChangeText={setPrice}
                     />
-                </View> */}
+                </View>
 
                 <View style={styles.descInputForm}>
                     <Text style={styles.formLabels}>Description</Text>
@@ -242,7 +244,7 @@ const ListingMenu = (props) => {
                         keyboardAppearance={'light'}
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
-                        placeholder={'Decribe the item you want trade'}
+                        placeholder={'Describe the item you want to list'}
                         placeholderTextColor={'black'}
                         multiline={true}
                         onSubmitEditing={Keyboard.dismiss}
@@ -251,7 +253,7 @@ const ListingMenu = (props) => {
                 </View>
 
                 <View style={styles.locationInputForm}>
-                    <Text style={styles.formLabels}>Location</Text>
+                    {/* <Text style={styles.formLabels}>Location</Text> */}
 
                     {/* <Map /> */}
 
