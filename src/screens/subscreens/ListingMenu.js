@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Keyboard, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,8 +12,6 @@ import { save_Image,
         set_Description, 
         set_Price,
         submit_Trade  } from '../../redux/actions/index';
-// import Map from '../../components/Map';
-// import { } from '../../redux/actions/index';
 
 const ListingMenu = (props) => {
 
@@ -138,11 +136,12 @@ const ListingMenu = (props) => {
     const setDescription = value => dispatch(set_Description(value));
     const setPrice = value => dispatch(set_Price(value));
 
+
     return (
         <View style={styles.listingModalContainer}>
             <View style={styles.imagesPane}>
                 <ScrollView horizontal={true} style={styles.imagesScrollPane}>
-                    {shortenedArray.map((image, key) => {
+                    {shortenedArray.map((image) => {
                         if (image === 'X') {
                             return (
                                 // return imageAdd highlight/button
@@ -244,7 +243,7 @@ const ListingMenu = (props) => {
                         keyboardAppearance={'light'}
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
-                        placeholder={'Describe the item you want to list'}
+                        placeholder={'Describe the item you want to post'}
                         placeholderTextColor={'black'}
                         multiline={true}
                         onSubmitEditing={Keyboard.dismiss}
@@ -276,6 +275,7 @@ const ListingMenu = (props) => {
                         numberOfLines={3}
                     /> */}
                 </View>
+
                 <TouchableOpacity onPress={submitTrade}>
                     <View style={styles.submitBtn}>
                         <Text style={styles.submitBtnText}>Submit Trade</Text>

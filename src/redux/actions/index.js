@@ -20,6 +20,12 @@ import { SET_DESCRIPTION } from '../constants/actionTypes';
 import { SET_PRICE } from '../constants/actionTypes';
 import { SUBMIT_TRADE } from '../constants/actionTypes';
 
+// mongodb Stitch config
+import { SET_CLIENT } from '../constants/actionTypes';
+import { SET_MONGO } from '../constants/actionTypes';
+import { SET_DB } from '../constants/actionTypes';
+import { SET_APP } from '../constants/actionTypes';
+
 // modal options filter section
 export const set_Distance = (value) => ({
     type: SET_DISTANCE,
@@ -80,4 +86,22 @@ export const set_Price = (value) => ({
 })
 export const submit_Trade = () => ({
     type: SUBMIT_TRADE
+})
+
+// mongodb Stitch config
+export const set_Client = (value) => ({
+  type: SET_CLIENT,
+  payload: value
+})
+export const set_Mongo = (value) => ({
+  type: SET_MONGO,
+  payload: value
+})
+export const set_Db = (value) => ({
+  type: SET_DB,
+  payload: value
+})
+export const set_App = (value) => ({
+  type: SET_APP,
+  payload: value
 })

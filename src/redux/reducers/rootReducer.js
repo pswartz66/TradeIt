@@ -5,12 +5,14 @@ import filterOptions from './modalFilter'
 import searchQueries from './searchQuery'
 import selectImages from './selectImage'
 import listForms from './listingForms'
+import dbSet from './dbSetup'
 
 const rootReducer = combineReducers({
   filterOptions,
   searchQueries,
   selectImages,
-  listForms
+  listForms,
+  dbSet
 });
 
 export default rootReducer;

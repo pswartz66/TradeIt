@@ -20,5 +20,14 @@ export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SUBMIT_TRADE = "SUBMIT_TRADE";
 export const SET_PRICE = "SET_PRICE";
 
+// mongodb Stitch config
+export const SET_CLIENT = "SET_CLIENT";
+export const SET_MONGO = "SET_MONGO";
+export const SET_DB = "SET_DB";
+export const SET_APP = "SET_APP";
+
+
+
+
 
 
