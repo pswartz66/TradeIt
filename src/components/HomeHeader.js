@@ -5,7 +5,6 @@ import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
 import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
 
-
 const HomeHeader = () => {
 
   // standard redux dispatch

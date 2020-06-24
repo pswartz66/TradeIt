@@ -19,7 +19,6 @@ const Home = () => {
   // standard redux dispatch
   const dispatch = useDispatch();
 
-
   // logic for initializing Stitch Client, DB, and App.
   // useDispatch to updated redux state
   // now in any other component/screen you can useSelector to get the 
@@ -32,9 +31,10 @@ const Home = () => {
     );
 
     if (stateObj.state.dbSet.db === undefined) {
-      // dispatch(set_Mongo(mongoDB));
       dispatch(set_Db(mongoDB.db("TradeItDB")));
       dispatch(set_App(Stitch.defaultAppClient));
+      dispatch(set_Mongo(mongoDB));
+
     }
     
   } else {

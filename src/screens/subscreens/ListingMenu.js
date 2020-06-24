@@ -13,7 +13,7 @@ import { save_Image,
         set_Price,
         submit_Trade  } from '../../redux/actions/index';
 
-const ListingMenu = (props) => {
+const ListingMenu = ({ navigation }) => {
 
     // test logger to log out state object in its entirety
     const imageState = useSelector(state => ({
@@ -128,6 +128,10 @@ const ListingMenu = (props) => {
         // navigate to home page
         // render a bunch of items to the home page
         // sort by most recent || most convienent to the user??
+
+        // submit listing to DB, see function below
+        submitListing();
+
     }
 
     // get text from input forms and update state
@@ -135,6 +139,27 @@ const ListingMenu = (props) => {
     const setTitle = value => dispatch(set_Title(value));
     const setDescription = value => dispatch(set_Description(value));
     const setPrice = value => dispatch(set_Price(value));
+
+
+    // Add data to databse when submit button is clicked
+    const submitListing = () => {
+      // const app = imageState.state.dbSet.app;
+      const mongodb = imageState.state.dbSet.mongo;
+      const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
+
+      let formData = imageState.state;
+
+      goodsCollection.insertOne({
+        title: formData.listForms.title,
+        price: formData.listForms.price,
+        description: formData.listForms.description,
+        images: formData.selectImages.images
+      })
+      .then(() => {
+        navigation.navigate("Home");
+      })
+      .catch(console.error);
+    }
 
 
     return (
