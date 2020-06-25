@@ -26,7 +26,8 @@ export const SET_MONGO = "SET_MONGO";
 export const SET_DB = "SET_DB";
 export const SET_APP = "SET_APP";
 
-
+// set users location ONLY when trade is submitted
+export const SET_LOCATION_POST = "SET_LOCATION_POST";
 
 
 

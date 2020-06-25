@@ -26,6 +26,9 @@ import { SET_MONGO } from '../constants/actionTypes';
 import { SET_DB } from '../constants/actionTypes';
 import { SET_APP } from '../constants/actionTypes';
 
+// set users location ONLY when trade is submitted
+import { SET_LOCATION_POST } from '../constants/actionTypes';
+
 // modal options filter section
 export const set_Distance = (value) => ({
     type: SET_DISTANCE,
@@ -103,5 +106,11 @@ export const set_Db = (value) => ({
 })
 export const set_App = (value) => ({
   type: SET_APP,
+  payload: value
+})
+
+// set users location ONLY when trade is submitted
+export const set_Location_Post = (value) => ({
+  type: SET_LOCATION_POST,
   payload: value
 })

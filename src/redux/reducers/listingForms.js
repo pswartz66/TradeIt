@@ -1,5 +1,5 @@
 
-export default function listForms (state = { title: '', description: '', price: '' }, action) {
+export default function listForms (state = { title: '', description: '', price: '', location_post: undefined }, action) {
     switch (action.type) {
         case "SET_TITLE":
             return {
@@ -20,6 +20,11 @@ export default function listForms (state = { title: '', description: '', price: 
             return {
                 ...state
             }
+        case "SET_LOCATION_POST":
+          return {
+            ...state,
+            location_post: action.payload
+          }
         default:
             return state;
     }
