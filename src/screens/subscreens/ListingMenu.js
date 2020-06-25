@@ -139,14 +139,19 @@ const ListingMenu = ({ navigation }) => {
     // Add data to databse when submit button is clicked
     const submitListing = () => {
       // const app = imageState.state.dbSet.app;
+      // get db instances from from state
+      // is there a better way to store this rather than saving it to state?
+      // for example one client object has a lot of layers, are they all necessary?
       const mongodb = imageState.state.dbSet.mongo;
       const client = imageState.state.dbSet.client;
       const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
 
       // console.log(goodsCollection);
 
+      // get form data from state object
       let formData = imageState.state;
 
+      // authenticate and then insert a document into mongodb
       client.auth.loginWithCredential(new AnonymousCredential()).then(user => {
         goodsCollection.insertOne({
           owner_id: client.auth.user.id,
