@@ -12,6 +12,7 @@ import { save_Image,
         set_Description, 
         set_Price,
         submit_Trade  } from '../../redux/actions/index';
+import { AnonymousCredential } from 'mongodb-stitch-react-native-sdk';
 
 const ListingMenu = ({ navigation }) => {
 
@@ -123,15 +124,10 @@ const ListingMenu = ({ navigation }) => {
     const submitTrade = () => {
         console.log('trade was submitted');
         dispatch(submit_Trade())
-        console.log(imageState);
-        // save trade to state &&
-        // navigate to home page
-        // render a bunch of items to the home page
-        // sort by most recent || most convienent to the user??
+        // console.log(imageState);
 
         // submit listing to DB, see function below
         submitListing();
-
     }
 
     // get text from input forms and update state
@@ -140,20 +136,26 @@ const ListingMenu = ({ navigation }) => {
     const setDescription = value => dispatch(set_Description(value));
     const setPrice = value => dispatch(set_Price(value));
 
-
     // Add data to databse when submit button is clicked
     const submitListing = () => {
       // const app = imageState.state.dbSet.app;
       const mongodb = imageState.state.dbSet.mongo;
+      const client = imageState.state.dbSet.client;
       const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
+
+      // console.log(goodsCollection);
 
       let formData = imageState.state;
 
-      goodsCollection.insertOne({
-        title: formData.listForms.title,
-        price: formData.listForms.price,
-        description: formData.listForms.description,
-        images: formData.selectImages.images
+      client.auth.loginWithCredential(new AnonymousCredential()).then(user => {
+        goodsCollection.insertOne({
+          owner_id: client.auth.user.id,
+          title: formData.listForms.title,
+          price: formData.listForms.price,
+          description: formData.listForms.description,
+          images: formData.selectImages.images
+        })
+        console.log(`Successfully inserted item with _id: ${user.id}`)
       })
       .then(() => {
         navigation.navigate("Home");

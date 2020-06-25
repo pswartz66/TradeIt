@@ -12,7 +12,7 @@ const Home = () => {
     state
   }));
 
-  console.log(stateObj.state.dbSet);
+  // console.log(stateObj.state.dbSet);
   // console.log(Stitch.defaultAppClient);
 
 
@@ -31,6 +31,7 @@ const Home = () => {
     );
 
     if (stateObj.state.dbSet.db === undefined) {
+      dispatch(set_Client(client));
       dispatch(set_Db(mongoDB.db("TradeItDB")));
       dispatch(set_App(Stitch.defaultAppClient));
       dispatch(set_Mongo(mongoDB));

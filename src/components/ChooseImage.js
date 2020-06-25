@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { useSelector, useDispatch } from "react-redux";
 import { save_Image } from '../redux/actions/index';
-// import ListingMenu from '../screens/subscreens/ListingMenu';
-
 
 const ChooseImage = ({ navigation }) => {
 
