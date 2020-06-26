@@ -4,6 +4,7 @@ import { SearchBar } from 'react-native-elements';
 import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
 import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
+import HomeBody from './HomeBody';
 
 const HomeHeader = () => {
 
@@ -59,14 +60,9 @@ const HomeHeader = () => {
               searchIcon={{ color: 'white', size: 22 }}
               placeholderTextColor={'grey'}
               placeholder={'Search for stuff to trade...'}
-              // ref={search => this.search = search}
-              // value={searchQuery}
               value={search}
-              // onChangeText={this.updateSearchQuery}
               onChangeText={setSearch}
-              // onClear={this.clearSearch}
               onClear={removeSearch}
-              // onSubmitEditing={this.queryFindSpecificItem}
               onSubmitEditing={(e) => submitSearch(e)}
               cancelButtonProps={{ buttonTextStyle: { fontSize: 16 }, color: 'white' }}
               clearIcon={false}
@@ -75,6 +71,8 @@ const HomeHeader = () => {
             />
 
             <TouchableOpacity>
+
+              {/* Options menu component is a subscreen i.e. a modal pop up filter */}
               <OptionsMenu />
             </TouchableOpacity>
           </View>
@@ -82,26 +80,13 @@ const HomeHeader = () => {
 
         </View>
 
-
       </View>
 
-      {/* ideally this page will contain two themes,
-                1. render random items from the database
-                2. on user search, query the db to filter on items
-                   equal or related to the search term */}
-      <View style={styles.homeBody}>
-        <Text>
-          Content to be rendered:
-          1. random list of items when user first opens app
-          2. items queried from the DB when user inputs string into search bar
+      {/* HomeBody is the middle/main section of the Home under Screens
+      this will contain a bunch of items from other users and have the ability
+      to be queried and filtered for specific criteria, i.e. distance, price etc.. */}
+      <HomeBody />
 
-          Note: a) simply display cards for each item maybe 2 or 3 to a row
-          b) render a new page showing all pictures for that item and description
-          c) handle interaction logic between people
-
-          These should be the general concepts/next steps
-        </Text>
-      </View>
     </View>
   )
 }
@@ -132,10 +117,5 @@ const styles = StyleSheet.create({
       height: 1,
       width: 0
     }
-  },
-  homeBody: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: 'orange'
   }
 })

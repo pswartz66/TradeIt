@@ -208,6 +208,7 @@ const ListingMenu = ({ navigation }) => {
     client.auth.loginWithCredential(new AnonymousCredential()).then(user => {
       goodsCollection.insertOne({
         owner_id: client.auth.user.id,
+        username: null,
         title: formData.listForms.title,
         price: formData.listForms.price,
         description: formData.listForms.description,
