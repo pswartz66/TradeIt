@@ -29,6 +29,10 @@ import { SET_APP } from '../constants/actionTypes';
 // set users location ONLY when trade is submitted
 import { SET_LOCATION_POST } from '../constants/actionTypes';
 
+// HomeBody component mongo queries
+import { SAVE_INITIAL_GOODS } from '../constants/actionTypes';
+
+
 // modal options filter section
 export const set_Distance = (value) => ({
     type: SET_DISTANCE,
@@ -112,5 +116,11 @@ export const set_App = (value) => ({
 // set users location ONLY when trade is submitted
 export const set_Location_Post = (value) => ({
   type: SET_LOCATION_POST,
+  payload: value
+})
+
+// HomeBody component mongo queries
+export const save_Initial_Goods = (value) => ({
+  type: SAVE_INITIAL_GOODS,
   payload: value
 })

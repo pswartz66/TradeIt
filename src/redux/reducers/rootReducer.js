@@ -6,13 +6,15 @@ import searchQueries from './searchQuery'
 import selectImages from './selectImage'
 import listForms from './listingForms'
 import dbSet from './dbSetup'
+import homeQueries from './homeBodyQueries';
 
 const rootReducer = combineReducers({
   filterOptions,
   searchQueries,
   selectImages,
   listForms,
-  dbSet
+  dbSet,
+  homeQueries
 });
 
 export default rootReducer;

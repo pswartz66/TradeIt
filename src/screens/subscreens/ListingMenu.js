@@ -65,7 +65,7 @@ const ListingMenu = ({ navigation }) => {
     // it was logging device location 100s of times..
     getPermissionAsync();
 
-  })
+  }, []);
 
   // function to handle camera roll permission
   const getPermissionAsync = async () => {
@@ -105,7 +105,8 @@ const ListingMenu = ({ navigation }) => {
     }
   }
 
-  // error hook, not currently saving this to state via redux
+  // error hook, not currently saving this to state via redux,
+  // does this matter or should we really add an action to redux just for a string?
   const [errorMsg, setErrorMsg] = useState(null);
 
   const getLocationPermissionAsync = async () => {
@@ -143,7 +144,6 @@ const ListingMenu = ({ navigation }) => {
 
   // set latitude and longitude of user device to state
   const setLocationPost = value => dispatch(set_Location_Post(value));
-
 
 
   // standard redux dispatch
