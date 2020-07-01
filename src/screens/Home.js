@@ -13,7 +13,7 @@ const Home = () => {
     state
   }));
 
-  
+
   // console.log(stateObj.state.dbSet);
   // console.log(Stitch.defaultAppClient);
 
@@ -35,50 +35,57 @@ const Home = () => {
   let mongoDB = undefined;
   let app = undefined;
 
-  const setup = () => {
-    if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
-      const client = Stitch.getAppClient("tradeitrealm-gdxsi");
-      mongoDB = client.getServiceClient(
-        RemoteMongoClient.factory,
-        "mongodb-atlas"
-      );
-
-      // if (stateObj.state.dbSet.db === undefined) {
-        dispatch(set_Client(client));
-        dispatch(set_Db(mongoDB.db("TradeItDB")));
-        app = Stitch.defaultAppClient;
-        // console.log(app);
-        dispatch(set_App(Stitch.defaultAppClient));
-        dispatch(set_Mongo(mongoDB));
-
-        // console.log(stateObj.state.dbSet.mongoDB);
-      // }
-
-    } else {
-
-      Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
-        // const client = stateObj.state.dbSet.client;
-
-        // Define MongoDB Service
+  const setup = async () => {
+    // try {
+      if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
+        const client = Stitch.getAppClient("tradeitrealm-gdxsi");
         mongoDB = client.getServiceClient(
           RemoteMongoClient.factory,
           "mongodb-atlas"
         );
-        // console.log(mongoDB);
-        dispatch(set_Client(client));
-        dispatch(set_Db(mongoDB.db("TradeItDB")));
-        app = Stitch.defaultAppClient;
-        dispatch(set_App(Stitch.defaultAppClient));
-        dispatch(set_Mongo(mongoDB));
 
-      });
-    }
+        if (stateObj.state.dbSet.db === undefined) {
+          dispatch(set_Client(client));
+          dispatch(set_Db(mongoDB.db("TradeItDB")));
+          app = Stitch.defaultAppClient;
+          // console.log(app);
+          dispatch(set_App(Stitch.defaultAppClient));
+          dispatch(set_Mongo(mongoDB));
+
+          // console.log(stateObj.state.dbSet.mongoDB);
+        }
+
+      } else {
+
+        Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
+          // const client = stateObj.state.dbSet.client;
+
+          // Define MongoDB Service
+          mongoDB = client.getServiceClient(
+            RemoteMongoClient.factory,
+            "mongodb-atlas"
+          );
+          // console.log(mongoDB);
+          dispatch(set_Client(client));
+          dispatch(set_Db(mongoDB.db("TradeItDB")));
+          app = Stitch.defaultAppClient;
+          dispatch(set_App(Stitch.defaultAppClient));
+          dispatch(set_Mongo(mongoDB));
+
+        });
+      }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   return (
     <View style={styles.container}>
       <HomeHeader />
 
+
+      {/* these props are return undefined, I think it's due to asynchronous db setup
+    maybe put it in async or try catch? */}
       <HomeBody appInstance={app} mongoInstance={mongoDB} />
 
     </View>

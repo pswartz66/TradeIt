@@ -24,20 +24,18 @@ const HomeBody = (props) => {
 
   console.log(props);
 
-  const getData = () => {
+  const getData = async () => {
     // get db instances from from state
     // is there a better way to store this rather than saving it to state?
     // for example one client object has a lot of layers, are they all necessary?
     // const mongodb = getState.state.dbSet.mongo;
     // const app = props.appInstance;
-    const app = getState.state.dbSet.app;
+    const app = await getState.state.dbSet.app;
+    // console.log(app);
     const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
     // const mongodb = props.mongoInstance;
 
-    // const client = getState.state.dbSet.client;
     const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
-    // console.log(goodsCollection);
-
     const query = { "images": { $exists: true, $ne: [] } };
 
     goodsCollection.find(query).toArray()
@@ -50,7 +48,6 @@ const HomeBody = (props) => {
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));
 
-    // console.log(result);
   }
 
   const initialLoadedGoods = () => {
