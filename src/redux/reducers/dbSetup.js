@@ -4,7 +4,7 @@ export default function dbSet(state = { client: undefined, mongo: undefined, db:
     case "SET_CLIENT":
       return {
         ...state,
-        client: action.payload
+        client: action.payload,
       }
     case "SET_MONGO":
       return {

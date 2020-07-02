@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { save_Initial_Goods } from '../redux/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const HomeBody = (props) => {
 
@@ -11,44 +12,62 @@ const HomeBody = (props) => {
     state
   }));
 
+  const [loading, setLoading] = useState(false);
+
   // standard redux dispatch
   const dispatch = useDispatch();
 
-  // const [isApp, setIsApp] = useState(undefined);
-  // console.log(getState.state.dbSet);
 
   // call only on mount and unmount using empty array arg []
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
 
+  //   getData();
+
+  // }, [props.appInstance !== undefined]);
+
+  // getData();
+
+  // this is now receiving props correctly after changing Home
+  // from a function to class based component
   console.log(props);
 
-  const getData = async () => {
-    // get db instances from from state
-    // is there a better way to store this rather than saving it to state?
-    // for example one client object has a lot of layers, are they all necessary?
-    // const mongodb = getState.state.dbSet.mongo;
-    // const app = props.appInstance;
-    const app = await getState.state.dbSet.app;
-    // console.log(app);
-    const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
-    // const mongodb = props.mongoInstance;
 
-    const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
-    const query = { "images": { $exists: true, $ne: [] } };
+  // const getData = () => {
+  //   setLoading(true);
+  //   // get db instances from from state
+  //   // is there a better way to store this rather than saving it to state?
+  //   // for example one client object has a lot of layers, are they all necessary?
+  //   // const mongodb = getState.state.dbSet.mongo;
+  //   // const app = props.appInstance;
 
-    goodsCollection.find(query).toArray()
-      .then(data => {
+  //   // if (loading === true) {
 
-        // save initialGoods to state
-        dispatch(save_Initial_Goods(data));
-        // console.log(data);
-        initialLoadedGoods()
-      })
-      .catch(err => console.error(`Failed to find documents: ${err}`));
+  //     const app = getState.state.dbSet.app;
+  //     // const app = props.appInstance;
 
-  }
+  //     // setLoading(false);
+  //     // console.log(app);
+  //     const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
+  //     // const mongodb = props.mongoInstance;
+
+  //     const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
+  //     const query = { "images": { $exists: true, $ne: [] } };
+
+  //     goodsCollection.find(query).toArray()
+  //       .then(data => {
+
+  //         // save initialGoods to state
+  //         dispatch(save_Initial_Goods(data));
+  //         // console.log(data);
+  //         initialLoadedGoods()
+  //         setLoading(false);
+  //       })
+  //       .catch(err => console.error(`Failed to find documents: ${err}`));
+
+  //   // }
+
+  // }
+
 
   const initialLoadedGoods = () => {
     let initData = getState.state.homeQueries.initial_Goods;
@@ -72,11 +91,15 @@ const HomeBody = (props) => {
     // )
   }
 
-    return (
-      <View style={styles.homeBody2}>
-
-      </View>
-    )
+  return (
+    <View style={styles.homeBody2}>
+      <Spinner
+        visible={loading}
+        textContent={''}
+        textStyle={styles.spinnerTextStyle}
+      />
+    </View>
+  )
   // if (getState.state.dbSet.app === undefined) {
   //   return (
   //     // ideally this page will contain two themes,
