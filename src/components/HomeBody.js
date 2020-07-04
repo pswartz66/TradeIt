@@ -17,60 +17,65 @@ const HomeBody = (props) => {
   // standard redux dispatch
   const dispatch = useDispatch();
 
-
+  let initialGoods;
   // call only on mount and unmount using empty array arg []
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   getData();
+    initialGoods = getState.state.homeQueries.initial_Goods
 
-  // }, [props.appInstance !== undefined]);
+    getData();
+
+  }, [initialGoods]);
 
   // getData();
 
   // this is now receiving props correctly after changing Home
   // from a function to class based component
-  console.log(props);
+  // console.log("app Object: " + "\n" + "--------------" + "\n");
+  // console.log(props.appInstance);
 
 
-  // const getData = () => {
-  //   setLoading(true);
-  //   // get db instances from from state
-  //   // is there a better way to store this rather than saving it to state?
-  //   // for example one client object has a lot of layers, are they all necessary?
-  //   // const mongodb = getState.state.dbSet.mongo;
-  //   // const app = props.appInstance;
+  const getData = () => {
+    setLoading(true);
+    // get db instances from from state
+    // is there a better way to store this rather than saving it to state?
+    // for example one client object has a lot of layers, are they all necessary?
+    // const mongodb = getState.state.dbSet.mongo;
+    // const app = props.appInstance;
 
-  //   // if (loading === true) {
+    if (loading === true) {
 
-  //     const app = getState.state.dbSet.app;
-  //     // const app = props.appInstance;
+      // const app = getState.state.dbSet.app;
+      const app = props.appInstance;
 
-  //     // setLoading(false);
-  //     // console.log(app);
-  //     const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
-  //     // const mongodb = props.mongoInstance;
+      // setLoading(false);
+      // console.log(app);
+      const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
+      // const mongodb = props.mongoInstance;
 
-  //     const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
-  //     const query = { "images": { $exists: true, $ne: [] } };
+      const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
+      const query = { "images": { $exists: true, $ne: [] } };
 
-  //     goodsCollection.find(query).toArray()
-  //       .then(data => {
+      goodsCollection.find(query).toArray()
+        .then(data => {
 
-  //         // save initialGoods to state
-  //         dispatch(save_Initial_Goods(data));
-  //         // console.log(data);
-  //         initialLoadedGoods()
-  //         setLoading(false);
-  //       })
-  //       .catch(err => console.error(`Failed to find documents: ${err}`));
+          // save initialGoods to state
+          dispatch(save_Initial_Goods(data));
+          // console.log(data);
+          initialLoadedGoods()
+          setLoading(false);
+        })
+        .catch(err => console.error(`Failed to find documents: ${err}`));
 
-  //   // }
+    }
 
-  // }
+  }
 
 
   const initialLoadedGoods = () => {
+
     let initData = getState.state.homeQueries.initial_Goods;
+    console.log(initData);
 
     console.log('/----------------------/')
     return (initData.map(obj => {

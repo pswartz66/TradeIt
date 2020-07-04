@@ -33,75 +33,81 @@ class Home extends React.Component {
     let existingClient;
     let mongoDB;
     // let app;
-      // standard redux dispatch
+    // standard redux dispatch
     // const dispatch = useDispatch();
-  
-      if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
-  
-        existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
-        this.setState({ myClient: existingClient })
 
-        // console.log(client);
+    if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
+
+      existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
+      this.setState({ myClient: existingClient })
+
+      // console.log(client);
+      // dispatch(set_Client(client));
+
+      mongoDB = existingClient.getServiceClient(
+        RemoteMongoClient.factory,
+        "mongodb-atlas"
+      );
+
+      // dispatch(set_Db(mongoDB.db("TradeItDB")));
+
+      // app = Stitch.defaultAppClient;
+      this.setState({
+        myDB: mongoDB.db("TradeItDB"),
+        myApp: Stitch.defaultAppClient
+      });
+      // dispatch(set_App(app));
+      // dispatch(set_Mongo(mongoDB));
+
+      // console.log(myClient);
+      // console.log(mongoDB);
+      // console.log(app);
+
+
+
+    } else {
+
+      Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
         // dispatch(set_Client(client));
-  
-        mongoDB = existingClient.getServiceClient(
+        this.setState({ myClient: client })
+
+        // Define MongoDB Service
+        mongoDB = client.getServiceClient(
           RemoteMongoClient.factory,
           "mongodb-atlas"
         );
-  
+        // console.log(mongoDB);
         // dispatch(set_Db(mongoDB.db("TradeItDB")));
-  
         // app = Stitch.defaultAppClient;
+        // dispatch(set_App(app));
+
         this.setState({
           myDB: mongoDB.db("TradeItDB"),
           myApp: Stitch.defaultAppClient
         });
-        // dispatch(set_App(app));
+
         // dispatch(set_Mongo(mongoDB));
+        // console.log(client);
 
         // console.log(myClient);
         // console.log(mongoDB);
         // console.log(app);
 
-
-        
-      } else {
-  
-        Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
-          // dispatch(set_Client(client));
-          this.setState({ myClient: client })
-  
-          // Define MongoDB Service
-          mongoDB = client.getServiceClient(
-            RemoteMongoClient.factory,
-            "mongodb-atlas"
-          );
-          // console.log(mongoDB);
-          // dispatch(set_Db(mongoDB.db("TradeItDB")));
-          // app = Stitch.defaultAppClient;
-          // dispatch(set_App(app));
-
-          this.setState({
-            myDB: mongoDB.db("TradeItDB"),
-            myApp: Stitch.defaultAppClient
-          });
-  
-          // dispatch(set_Mongo(mongoDB));
-          // console.log(client);
-
-          // console.log(myClient);
-          // console.log(mongoDB);
-          // console.log(app);
-  
-        })
-        .catch (error => {
+      })
+        .catch(error => {
           console.log('handled error:   ' + error)
         })
-          
-      }
+
+    }
 
   }
-  
+
+  componentDidUpdate() {
+    console.log("app Object: " + "\n" + "--------------" + "\n");
+
+    return true;
+    // console.log(this.state.myApp);
+  }
 
   // logic for initializing Stitch Client, DB, and App.
   // useDispatch to updated redux state
@@ -154,16 +160,25 @@ class Home extends React.Component {
 
   // console.log(stateObj);
 
-  render() {
+  renderHomePageContent() {
     return (
-      <View style={styles.container}>
-        <HomeHeader />
-        <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
-      </View>
-    )
-
+        <View style={styles.container}>
+          <HomeHeader />
+          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
+        </View>
+      )
   }
 
+  render() {
+    if (this.componentDidUpdate) {
+      return (
+        <View style={styles.container}>
+          <HomeHeader />
+          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
+        </View>
+      )
+    } 
+  }
 };
 
 export default Home;
