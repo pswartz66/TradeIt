@@ -8,7 +8,7 @@ import HomeBody from '../components/HomeBody';
 
 
 class Home extends React.Component {
-  // _isMounted = false;
+  _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -24,84 +24,74 @@ class Home extends React.Component {
   // }));
 
   componentDidMount() {
-    // this._isMounted = true;
+    this._isMounted = true;
     let existingClient;
     let mongoDB;
     // let app;
     // standard redux dispatch
     // const dispatch = useDispatch();
 
-
-      if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
-
-
-        existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
-        // this.setState({ myClient: existingClient })
+    if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
 
 
-        // console.log(client);
-        // dispatch(set_Client(client));
+      existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
 
-        mongoDB = existingClient.getServiceClient(
-          RemoteMongoClient.factory,
-          "mongodb-atlas"
-        );
+      mongoDB = existingClient.getServiceClient(
+        RemoteMongoClient.factory,
+        "mongodb-atlas"
+      );
 
-        // dispatch(set_Db(mongoDB.db("TradeItDB")));
-
-        // app = Stitch.defaultAppClient;
-
+      if (this._isMounted) {
         this.setState({
           myClient: existingClient,
           myDB: mongoDB.db("TradeItDB"),
           myApp: Stitch.defaultAppClient
         });
+      }
 
 
-      } else {
 
-        Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
-          // dispatch(set_Client(client));
+    } else {
 
-          // this.setState({ myClient: client })
+      Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
 
-          // Define MongoDB Service
-          mongoDB = client.getServiceClient(
-            RemoteMongoClient.factory,
-            "mongodb-atlas"
-          );
-          // console.log(mongoDB);
-          // dispatch(set_Db(mongoDB.db("TradeItDB")));
-          // app = Stitch.defaultAppClient;
-          // dispatch(set_App(app));
+        // Define MongoDB Service
+        mongoDB = client.getServiceClient(
+          RemoteMongoClient.factory,
+          "mongodb-atlas"
+        );
 
+        if (this._isMounted) {
           this.setState({
             myClient: client,
             myDB: mongoDB.db("TradeItDB"),
             myApp: Stitch.defaultAppClient
           });
+        }
 
+      })
+        .catch(error => {
+          console.log('handled error:   ' + error)
         })
-          .catch(error => {
-            console.log('handled error:   ' + error)
-          })
 
-      }
+    }
 
+    // console.log(this.state);
   }
 
-  
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  //   console.log(this.state.myApp);
-  // }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    // console.log(this.state.myApp);
+  }
 
   componentDidUpdate() {
-    console.log("app Object: " + "\n" + "--------------" + "\n");
-    console.log(this.state.myApp);
+    // console.log("app Object: " + "\n" + "--------------" + "\n");
+    console.log(this.state);
 
     return true;
   }
+
 
   // logic for initializing Stitch Client, DB, and App.
   // useDispatch to updated redux state
@@ -164,15 +154,15 @@ class Home extends React.Component {
   // }
 
   render() {
-    if (this.componentDidUpdate) {
+    // if (this.componentDidUpdate) {
       return (
         <View style={styles.container}>
-          <HomeHeader appInstance={this.state.myApp} mongoInstance={this.state.myDB}/>
-          {/* <HomeBody  /> */}
+          <HomeHeader />
+          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
         </View>
       )
     }
-  }
+  // }
 };
 
 export default Home;

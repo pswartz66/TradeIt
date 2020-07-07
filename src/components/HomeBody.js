@@ -26,7 +26,6 @@ const HomeBody = (props) => {
   }, [initialGoods]);
 
 
-
   const getData = () => {
 
     // const app = getState.state.dbSet.app;
@@ -43,7 +42,7 @@ const HomeBody = (props) => {
       .then(data => {
 
         // save initialGoods to state
-        dispatch(save_Initial_Goods(data));
+        // dispatch(save_Initial_Goods(data));
         // console.log(data);
 
         initialLoadedGoods();
