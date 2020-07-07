@@ -4,8 +4,9 @@ import { SearchBar } from 'react-native-elements';
 import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
 import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
+import HomeBody from '../components/HomeBody';
 
-const HomeHeader = () => {
+const HomeHeader = (props) => {
 
   // standard redux dispatch
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ const HomeHeader = () => {
       this will contain a bunch of items from other users and have the ability
       to be queried and filtered for specific criteria, i.e. distance, price etc.. */}
       {/* {totalState.state.dbSet.mongo ? <HomeBody /> : null} */}
-      {/* <HomeBody /> */}
+      <HomeBody appInstance={props.appInstance}/>
 
     </View>
   )
