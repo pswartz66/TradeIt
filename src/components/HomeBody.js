@@ -15,16 +15,17 @@ const HomeBody = (props) => {
   const dispatch = useDispatch();
 
   let initialGoods;
+  initialGoods = getState.state.homeQueries.initial_Goods
 
   // call only on mount and unmount using empty array arg []
   useEffect(() => {
 
-    initialGoods = getState.state.homeQueries.initial_Goods
 
     getData();
 
   }, [initialGoods]);
 
+  console.log(props);
 
   const getData = () => {
 

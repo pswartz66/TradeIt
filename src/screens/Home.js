@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import HomeHeader from '../components/HomeHeader';
 import { Stitch, RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,91 +7,100 @@ import { set_Client, set_Mongo, set_Db, set_App } from '../redux/actions/index';
 import HomeBody from '../components/HomeBody';
 
 
-class Home extends React.Component {
-  _isMounted = false;
-
+export default class Home extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       myClient: undefined,
       myDB: undefined,
-      myApp: undefined
+      myApp: undefined,
+      isAppUpdated: false
     }
   }
+  
   // test logger to log out state object in its entirety
   // const stateObj = useSelector(state => ({
   //   state
   // }));
 
   componentDidMount() {
-    this._isMounted = true;
-    let existingClient;
-    let mongoDB;
-    // let app;
+    // let mongoDB;
+  
     // standard redux dispatch
     // const dispatch = useDispatch();
 
-    if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
+    // if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
 
+    //   console.log('app already has client');
 
-      existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
+    //   let existingClient;
 
-      mongoDB = existingClient.getServiceClient(
-        RemoteMongoClient.factory,
-        "mongodb-atlas"
-      );
+    //   existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
 
-      if (this._isMounted) {
-        this.setState({
-          myClient: existingClient,
-          myDB: mongoDB.db("TradeItDB"),
-          myApp: Stitch.defaultAppClient
-        });
-      }
+    //   this.setState({ myClient: existingClient });
 
+    //   // Define MongoDB Service    
+    //   mongoDB = existingClient.getServiceClient(
+    //     RemoteMongoClient.factory,
+    //     "mongodb-atlas"
+    //   );
 
+    //   this.setState({
+    //     myDB: mongoDB.db("TradeItDB"),
+    //     myApp: Stitch.defaultAppClient,
+    //     isAppUpdated: true
+    //   });
 
-    } else {
+    // } else {
+
+      console.log('app DOES NOT already have a client');
 
       Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
+        this.setState({ client });
 
-        // Define MongoDB Service
+        // console.log(this.state.client);
+        // Define MongoDB Service    
         mongoDB = client.getServiceClient(
           RemoteMongoClient.factory,
           "mongodb-atlas"
         );
 
-        if (this._isMounted) {
           this.setState({
-            myClient: client,
             myDB: mongoDB.db("TradeItDB"),
-            myApp: Stitch.defaultAppClient
+            myApp: Stitch.defaultAppClient,
+            isAppUpdated: true
           });
-        }
 
-      })
-        .catch(error => {
-          console.log('handled error:   ' + error)
-        })
+      }).catch(error => {
+        console.log('handled error:   ' + error)
+      });
 
-    }
+    // }
 
-    // console.log(this.state);
-  }
-
-
-  componentWillUnmount() {
-    this._isMounted = false;
+    // console.log("app Object: from ComponentDidMount " + "\n" + "--------------" + "\n");
     // console.log(this.state.myApp);
+  
+    console.log(this.state.myApp);
   }
 
-  componentDidUpdate() {
-    // console.log("app Object: " + "\n" + "--------------" + "\n");
-    console.log(this.state);
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  //   // console.log(this.state.myApp);
+  // }
 
-    return true;
+  // componentDidUpdate() {
+    // console.log("app Object: from ComponentDidUpdate" + "\n" + "--------------" + "\n");
+    // console.log(this.state.myApp);
+
+    // this.setState({ isAppUpdated: true });
+    // return true;
+  // }
+
+  didAppUpdate() {
+    this.setState({ isAppUpdated: true });
+    console.log(this.state.isAppUpdated);
   }
-
 
   // logic for initializing Stitch Client, DB, and App.
   // useDispatch to updated redux state
@@ -154,18 +163,18 @@ class Home extends React.Component {
   // }
 
   render() {
-    // if (this.componentDidUpdate) {
+    // if (this.state.isAppUpdated) {
       return (
         <View style={styles.container}>
           <HomeHeader />
-          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
+          {/* <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} /> */}
         </View>
       )
-    }
-  // }
+    // }
+  }
 };
 
-export default Home;
+// export default Home;
 
 const styles = StyleSheet.create({
   container: {
