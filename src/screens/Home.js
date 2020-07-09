@@ -14,11 +14,10 @@ export default class Home extends React.Component {
     this.state = {
       myClient: undefined,
       myDB: undefined,
-      myApp: undefined,
-      isAppUpdated: false
+      myApp: undefined
     }
   }
-  
+
   // test logger to log out state object in its entirety
   // const stateObj = useSelector(state => ({
   //   state
@@ -68,20 +67,13 @@ export default class Home extends React.Component {
 
           this.setState({
             myDB: mongoDB.db("TradeItDB"),
-            myApp: Stitch.defaultAppClient,
-            isAppUpdated: true
+            myApp: Stitch.defaultAppClient
           });
 
       }).catch(error => {
         console.log('handled error:   ' + error)
       });
 
-    // }
-
-    // console.log("app Object: from ComponentDidMount " + "\n" + "--------------" + "\n");
-    // console.log(this.state.myApp);
-  
-    console.log(this.state.myApp);
   }
 
   // componentWillUnmount() {
@@ -97,10 +89,6 @@ export default class Home extends React.Component {
     // return true;
   // }
 
-  didAppUpdate() {
-    this.setState({ isAppUpdated: true });
-    console.log(this.state.isAppUpdated);
-  }
 
   // logic for initializing Stitch Client, DB, and App.
   // useDispatch to updated redux state
@@ -167,7 +155,7 @@ export default class Home extends React.Component {
       return (
         <View style={styles.container}>
           <HomeHeader />
-          {/* <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} /> */}
+          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
         </View>
       )
     // }

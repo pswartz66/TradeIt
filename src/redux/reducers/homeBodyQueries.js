@@ -1,8 +1,9 @@
 
 export default function homeQueries(state = { initial_Goods: [] }, action) {
   switch (action.type) {
-    case "SAVE_INITIAL_GOODS":
+    case "GET_INITIAL_GOODS":
       return {
+        ...state,
         initial_Goods: action.payload
       }
       default:

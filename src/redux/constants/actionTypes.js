@@ -30,7 +30,7 @@ export const SET_APP = "SET_APP";
 export const SET_LOCATION_POST = "SET_LOCATION_POST";
 
 // HomeBody component mongo queries
-export const SAVE_INITIAL_GOODS = "SAVE_INITIAL_GOODS";
+export const GET_INITIAL_GOODS = "GET_INITIAL_GOODS";
 
 
 

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
-import { save_Initial_Goods } from '../redux/actions';
+import { get_Initial_Goods } from '../redux/actions';
 
 const HomeBody = (props) => {
 
@@ -19,20 +19,22 @@ const HomeBody = (props) => {
 
   // call only on mount and unmount using empty array arg []
   useEffect(() => {
+    if (props.appInstance === undefined) {
+      console.log('waiting for app prop');
+    } else {
+      getData();
+    }
+  }, []);
 
 
-    getData();
-
-  }, [initialGoods]);
-
-  console.log(props);
+  // console.log(props);
 
   const getData = () => {
 
     // const app = getState.state.dbSet.app;
     let app = props.appInstance;
+    console.log(app);
 
-    // console.log(app);
     const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
     // const mongodb = props.mongoInstance;
 
@@ -43,10 +45,10 @@ const HomeBody = (props) => {
       .then(data => {
 
         // save initialGoods to state
-        // dispatch(save_Initial_Goods(data));
+        dispatch(get_Initial_Goods(data));
         // console.log(data);
 
-        initialLoadedGoods();
+        // initialLoadedGoods();
 
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));
@@ -55,21 +57,22 @@ const HomeBody = (props) => {
   }
 
 
-  const initialLoadedGoods = () => {
+  // const initialLoadedGoods = () => {
 
-    let initData = getState.state.homeQueries.initial_Goods;
-    // console.log(initData);
+  //   let initData = getState.state.homeQueries.initial_Goods;
+  //   // console.log(initData);
 
-    console.log('/----------------------/')
-    return (initData.map(obj => {
-      console.log(obj.title);
+  //   console.log('/----------------------/')
+  //   return (initData.map(obj => {
+  //     console.log(obj.title);
 
-    }))
+  //   }))
 
-  }
+  // }
 
   return (
-    <View style={styles.homeBody2}>
+    
+    <View style={styles.homeBody}>
       <View style={styles.goodsContainers}>
 
       </View>
@@ -82,7 +85,7 @@ const HomeBody = (props) => {
 export default HomeBody;
 
 const styles = StyleSheet.create({
-  homeBody2: {
+  homeBody: {
     flex: 1,
     padding: 10,
     backgroundColor: 'blue',

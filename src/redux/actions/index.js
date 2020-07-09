@@ -30,7 +30,7 @@ import { SET_APP } from '../constants/actionTypes';
 import { SET_LOCATION_POST } from '../constants/actionTypes';
 
 // HomeBody component mongo queries
-import { SAVE_INITIAL_GOODS } from '../constants/actionTypes';
+import { GET_INITIAL_GOODS } from '../constants/actionTypes';
 
 
 // modal options filter section
@@ -120,7 +120,7 @@ export const set_Location_Post = (value) => ({
 })
 
 // HomeBody component mongo queries
-export const save_Initial_Goods = (value) => ({
-  type: SAVE_INITIAL_GOODS,
+export const get_Initial_Goods = (value) => ({
+  type: GET_INITIAL_GOODS,
   payload: value
 })

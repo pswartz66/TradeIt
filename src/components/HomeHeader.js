@@ -41,6 +41,7 @@ const HomeHeader = () => {
     //   <HomeBody />
     // )
   }
+  
   // clear search in state
   const removeSearch = () => {
     dispatch(remove_Query());
