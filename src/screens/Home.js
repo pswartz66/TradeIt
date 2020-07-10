@@ -57,6 +57,7 @@ export default class Home extends React.Component {
 
       Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
         this.setState({ client });
+        // dispatch(set_Client(client));
 
         // console.log(this.state.client);
         // Define MongoDB Service    
@@ -69,6 +70,9 @@ export default class Home extends React.Component {
             myDB: mongoDB.db("TradeItDB"),
             myApp: Stitch.defaultAppClient
           });
+        // dispatch(set_Db(mongoDB.db("TradeItDB")));
+        // dispatch(set_App(app));
+        
 
       }).catch(error => {
         console.log('handled error:   ' + error)
@@ -155,7 +159,7 @@ export default class Home extends React.Component {
       return (
         <View style={styles.container}>
           <HomeHeader />
-          <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} />
+          {/* <HomeBody appInstance={this.state.myApp} mongoInstance={this.state.myDB} /> */}
         </View>
       )
     // }
