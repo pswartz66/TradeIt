@@ -2,15 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import configureStore from './src/redux/store/configureStore';
 import InitialSplashScreen from './src/components/InitialSplashScreen';
-import { useSelector, useDispatch } from "react-redux";
-import { set_Client, set_Mongo, set_Db, set_App } from './src/redux/actions/index';
 import { Stitch, RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 
 // Root level of app
 import Root from './src/root';
-// const INITIAL_STATE = {
-//   isModalOpen: false
-// }
 
 const store = configureStore();
 
@@ -42,21 +37,20 @@ const store = configureStore();
 // render() {
 
 export default function App() {
-  // standard redux dispatch
-  // const dispatch = useDispatch();
 
   const [isLoadingSplash, setIsLoadingSplash] = useState(true);
   const [myClient, setmyClient] = useState(undefined);
   const [myDB, setmyDB] = useState(undefined);
   const [myApp, setmyApp] = useState(undefined);
+  const [complete, isCompleted] = useState(false);
 
   const loadTimeTask = async () => {
     return new Promise((resolve) => {
-      
-        setTimeout(
-          () => { resolve('result') },
-          3000
-        );
+
+      setTimeout(
+        () => { resolve('result') },
+        3000
+      );
 
     });
   }
@@ -65,9 +59,11 @@ export default function App() {
 
     async function whileLoading() {
       const data = await loadTimeTask();
+      const setupStitch = await dbInitialize();
 
-      if (data !== null) {
+      if (data !== null && setupStitch !== null) {
         setIsLoadingSplash(false);
+
       }
     }
     whileLoading();
@@ -75,20 +71,24 @@ export default function App() {
     // used as cleanup, i.e. useEffect needs to return 'something'
     return (console.log('finished'));
 
-  });
+  }, [complete === false]);
 
 
-  const dbInitialize = () => {
+  const dbInitialize = async () => {
     let mongoDB;
 
-    Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
-      setmyClient(client);
-      // this.setState({ client });
-      // dispatch(set_Client(client));
+    if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
 
-      // console.log(this.state.client);
+      console.log('app already has client');
+
+      let existingClient;
+
+      existingClient = Stitch.getAppClient("tradeitrealm-gdxsi");
+
+      setmyClient(existingClient);
+
       // Define MongoDB Service    
-      mongoDB = client.getServiceClient(
+      mongoDB = existingClient.getServiceClient(
         RemoteMongoClient.factory,
         "mongodb-atlas"
       );
@@ -96,20 +96,35 @@ export default function App() {
       setmyDB(mongoDB.db("TradeItDB"));
       setmyApp(Stitch.defaultAppClient);
 
+      return (isCompleted(true));
 
-        // this.setState({
-        //   myDB: mongoDB.db("TradeItDB"),
-        //   myApp: Stitch.defaultAppClient
-        // });
-      // dispatch(set_Db(mongoDB.db("TradeItDB")));
-      // dispatch(set_App(app));
-      
+    } else {
 
-    }).catch(error => {
-      console.log('handled error:   ' + error)
-    });
+      console.log('app DOES NOT already have a client');
 
-    console.log("--------------------------" + "\n" + myApp);
+      Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
+        setmyClient(client);        
+
+        // Define MongoDB Service    
+        mongoDB = client.getServiceClient(
+          RemoteMongoClient.factory,
+          "mongodb-atlas"
+        );
+
+        setmyDB(mongoDB.db("TradeItDB"));
+        setmyApp(Stitch.defaultAppClient);
+
+        return (isCompleted(true));
+
+
+
+
+      }).catch(error => {
+        console.log('handled error:   ' + error)
+      });
+
+    }
+    // console.log(myApp);
   }
 
   if (isLoadingSplash) {
@@ -121,11 +136,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <Root />
+      <Root client={myClient} db={myDB} app={myApp}/>
     </Provider>
   );
 }
 
-
-
-// }

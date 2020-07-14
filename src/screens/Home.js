@@ -18,10 +18,6 @@ export default class Home extends React.Component {
     }
   }
 
-  // test logger to log out state object in its entirety
-  // const stateObj = useSelector(state => ({
-  //   state
-  // }));
 
   componentDidMount() {
     // let mongoDB;
@@ -52,8 +48,6 @@ export default class Home extends React.Component {
     //   });
 
     // } else {
-
-      console.log('app DOES NOT already have a client');
 
       // Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
       //   this.setState({ client });
