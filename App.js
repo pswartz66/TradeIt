@@ -4,6 +4,7 @@ import configureStore from './src/redux/store/configureStore';
 import InitialSplashScreen from './src/components/InitialSplashScreen';
 import { useSelector, useDispatch } from "react-redux";
 import { set_Client, set_Mongo, set_Db, set_App } from './src/redux/actions/index';
+import { Stitch, RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 
 // Root level of app
 import Root from './src/root';
@@ -45,13 +46,18 @@ export default function App() {
   // const dispatch = useDispatch();
 
   const [isLoadingSplash, setIsLoadingSplash] = useState(true);
+  const [myClient, setmyClient] = useState(undefined);
+  const [myDB, setmyDB] = useState(undefined);
+  const [myApp, setmyApp] = useState(undefined);
 
   const loadTimeTask = async () => {
     return new Promise((resolve) => {
-      setTimeout(
-        () => { resolve('result') },
-        3000
-      )
+      
+        setTimeout(
+          () => { resolve('result') },
+          3000
+        );
+
     });
   }
 
@@ -72,7 +78,42 @@ export default function App() {
   });
 
 
+  const dbInitialize = () => {
+    let mongoDB;
+
+    Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
+      setmyClient(client);
+      // this.setState({ client });
+      // dispatch(set_Client(client));
+
+      // console.log(this.state.client);
+      // Define MongoDB Service    
+      mongoDB = client.getServiceClient(
+        RemoteMongoClient.factory,
+        "mongodb-atlas"
+      );
+
+      setmyDB(mongoDB.db("TradeItDB"));
+      setmyApp(Stitch.defaultAppClient);
+
+
+        // this.setState({
+        //   myDB: mongoDB.db("TradeItDB"),
+        //   myApp: Stitch.defaultAppClient
+        // });
+      // dispatch(set_Db(mongoDB.db("TradeItDB")));
+      // dispatch(set_App(app));
+      
+
+    }).catch(error => {
+      console.log('handled error:   ' + error)
+    });
+
+    console.log("--------------------------" + "\n" + myApp);
+  }
+
   if (isLoadingSplash) {
+
     return (
       <InitialSplashScreen />
     )

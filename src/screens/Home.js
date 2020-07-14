@@ -55,30 +55,34 @@ export default class Home extends React.Component {
 
       console.log('app DOES NOT already have a client');
 
-      Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
-        this.setState({ client });
-        // dispatch(set_Client(client));
+      // Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
+      //   this.setState({ client });
+      //   // dispatch(set_Client(client));
 
-        // console.log(this.state.client);
-        // Define MongoDB Service    
-        mongoDB = client.getServiceClient(
-          RemoteMongoClient.factory,
-          "mongodb-atlas"
-        );
+      //   // console.log(this.state.client);
+      //   // Define MongoDB Service    
+      //   mongoDB = client.getServiceClient(
+      //     RemoteMongoClient.factory,
+      //     "mongodb-atlas"
+      //   );
 
-          this.setState({
-            myDB: mongoDB.db("TradeItDB"),
-            myApp: Stitch.defaultAppClient
-          });
-        // dispatch(set_Db(mongoDB.db("TradeItDB")));
-        // dispatch(set_App(app));
+      //     this.setState({
+      //       myDB: mongoDB.db("TradeItDB"),
+      //       myApp: Stitch.defaultAppClient
+      //     });
+      //   // dispatch(set_Db(mongoDB.db("TradeItDB")));
+      //   // dispatch(set_App(app));
         
 
-      }).catch(error => {
-        console.log('handled error:   ' + error)
-      });
+      // }).catch(error => {
+      //   console.log('handled error:   ' + error)
+      // });
 
   }
+
+  // componentDidUpdate() {
+  //   console.log(this.state.myApp);
+  // }
 
   // componentWillUnmount() {
   //   this._isMounted = false;

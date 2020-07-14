@@ -19,6 +19,7 @@ const HomeBody = (props) => {
 
   // call only on mount and unmount using empty array arg []
   useEffect(() => {
+    
     if (props.appInstance === undefined) {
       console.log('waiting for app prop');
     } else {

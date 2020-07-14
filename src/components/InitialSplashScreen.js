@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class SplashScreen extends React.Component {
+  
   render() {
     return (
       <View style={styles.SplashContainer}>
@@ -10,10 +12,18 @@ export default class SplashScreen extends React.Component {
           Trade It
         </Text>
 
+        <Spinner
+          visible={true}
+          textContent={''}
+          textStyle={styles.spinnerTextStyle}
+        />
+
       </View>
+    
     )
   }
 }
+
 
 
 const styles = StyleSheet.create({
@@ -24,8 +34,9 @@ const styles = StyleSheet.create({
   },
   SplashText: {
     color: 'white',
-    fontSize: 40,
+    fontSize: 46,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 110
   }
 })
