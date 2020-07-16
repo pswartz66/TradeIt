@@ -116,9 +116,6 @@ export default function App() {
 
         return (isCompleted(true));
 
-
-
-
       }).catch(error => {
         console.log('handled error:   ' + error)
       });

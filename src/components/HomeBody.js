@@ -6,6 +6,8 @@ import { get_Initial_Goods } from '../redux/actions';
 
 const HomeBody = (props) => {
 
+  // console.log(props);
+
   // test logger to log out state object in its entirety
   const getState = useSelector(state => ({
     state
@@ -14,21 +16,24 @@ const HomeBody = (props) => {
   // standard redux dispatch
   const dispatch = useDispatch();
 
+  console.log('this is the app from redux state');
+  let appFromRedux = getState.state.dbSet.app;
+  console.log(appFromRedux);
+
   let initialGoods;
   initialGoods = getState.state.homeQueries.initial_Goods
 
   // call only on mount and unmount using empty array arg []
-  useEffect(() => {
+  // useEffect(() => {
     
-    if (props.appInstance === undefined) {
-      console.log('waiting for app prop');
-    } else {
-      getData();
-    }
-  }, []);
+  //   if (props.appInstance === undefined) {
+  //     console.log('waiting for app prop');
+  //   } else {
+  //     getData();
+  //   }
+  // }, []);
 
 
-  // console.log(props);
 
   const getData = () => {
 

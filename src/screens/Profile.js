@@ -99,7 +99,7 @@ export default class Profile extends React.Component {
           </View>
           <Text style={styles.profTextUserName}>
             username
-                    </Text>
+          </Text>
         </View>
 
 

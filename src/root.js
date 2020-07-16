@@ -24,78 +24,89 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // and fill out a form for price/description/location of item
 const CameraStack = createStackNavigator();
 const CameraStackScreen = () => (
-    <CameraStack.Navigator>
-        <CameraStack.Screen name="ChooseImage" component={ChooseImage} />
-        <CameraStack.Screen name="ListingMenu" component={ListingMenu} />
-    </CameraStack.Navigator>
+  <CameraStack.Navigator>
+    <CameraStack.Screen name="ChooseImage" component={ChooseImage} />
+    <CameraStack.Screen name="ListingMenu" component={ListingMenu} />
+  </CameraStack.Navigator>
 )
 
 
 // Root bottom tab navigation
 const RootTab = createBottomTabNavigator();
-const RootTabScreen = () => (
-    <RootTab.Navigator
-        screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-                if (route.name === 'Home') {
-                    iconName = 'ios-home'
-                    size = 30
-                } else if (route.name === 'Camera') {
-                    iconName = 'ios-camera'
-                    size = 44
-                } else if (route.name === 'Profile') {
-                    iconName = 'ios-person'
-                    size = 30
-                }
+const RootTabScreen = (props) => {
 
-                // return icon component
-                return <Ionicons name={iconName} size={size} color={color} />;
-            },
-        })}
-        tabBarOptions={{
-            activeTintColor: '#2196F3',
-            inactiveTintColor: '#3c4b52',
-            style: {
-                height: 70,
-                backgroundColor: 'white',
-                // borderTopColor: '#000000'
-            },
-            showLabel: false
-        }}
+  // console.log(props);
+  // let appProp = props.app;
+  // console.log(appProp);
+
+  // standard redux dispatch
+  const dispatch = useDispatch();
+  dispatch(set_App(props.app));
+
+
+  return (
+    <RootTab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Home') {
+            iconName = 'ios-home'
+            size = 30
+          } else if (route.name === 'Camera') {
+            iconName = 'ios-camera'
+            size = 44
+          } else if (route.name === 'Profile') {
+            iconName = 'ios-person'
+            size = 30
+          }
+
+          // return icon component
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#2196F3',
+        inactiveTintColor: '#3c4b52',
+        style: {
+          height: 70,
+          backgroundColor: 'white'
+        },
+        showLabel: false
+      }}
     >
-        <RootTab.Screen name="Home" component={Home} />
-        <RootTab.Screen name="Camera" component={CameraStackScreen} />
-        <RootTab.Screen name="Profile" component={Profile} />
+      <RootTab.Screen name="Home" component={Home} />
+      <RootTab.Screen name="Camera" component={CameraStackScreen} />
+      <RootTab.Screen name="Profile" component={Profile} />
     </RootTab.Navigator>
-)
+  )
+}
 
 // Root Navigation Container
 // all navigation stacks for rest of app start here
 export default function Root(props) {
 
-    // test logger to log out state object in its entirety
-    // const stateObj = useSelector(state => ({
-    //   state
-    // }));
+  // test logger to log out state object in its entirety
+  // const stateObj = useSelector(state => ({
+  //   state
+  // }));
 
-    // standard redux dispatch
-    // const dispatch = useDispatch();
+  // standard redux dispatch
+  // const dispatch = useDispatch();
 
-    // since root is wrapped in redux provider, I should be able to 
-    // set the client, db, and app to redux state... here using dispatch
-    console.log(props);
+  // since root is wrapped in redux provider, I should be able to 
+  // set the client, db, and app to redux state... here using dispatch
+  // console.log(props);
 
 
-    // dispatch(set_Client(props.client));
-    // dispatch(set_Db(props.db));
-    // dispatch(set_App(props.app));
+  // dispatch(set_Client(props.client));
+  // dispatch(set_Db(props.db));
+  // dispatch(set_App(props.app));
 
-    return (
-        <NavigationContainer>
-            <RootTabScreen />
-        </NavigationContainer>
-    )
+  return (
+    <NavigationContainer>
+      <RootTabScreen app={props.app} db={props.db} client={props.client} />
+    </NavigationContainer>
+  )
 }
 
 

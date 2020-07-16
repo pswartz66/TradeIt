@@ -145,7 +145,6 @@ const ListingMenu = ({ navigation }) => {
   // set latitude and longitude of user device to state
   const setLocationPost = value => dispatch(set_Location_Post(value));
 
-
   // standard redux dispatch
   const dispatch = useDispatch();
 
