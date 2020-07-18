@@ -35,14 +35,9 @@ const CameraStackScreen = () => (
 const RootTab = createBottomTabNavigator();
 const RootTabScreen = (props) => {
 
-  // console.log(props);
-  // let appProp = props.app;
-  // console.log(appProp);
-
   // standard redux dispatch
   const dispatch = useDispatch();
   dispatch(set_App(props.app));
-
 
   return (
     <RootTab.Navigator

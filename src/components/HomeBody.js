@@ -16,34 +16,55 @@ const HomeBody = (props) => {
   // standard redux dispatch
   const dispatch = useDispatch();
 
-  console.log('this is the app from redux state');
-  let appFromRedux = getState.state.dbSet.app;
-  console.log(appFromRedux);
+  // console.log(appFromRedux);
 
-  let initialGoods;
-  initialGoods = getState.state.homeQueries.initial_Goods
+  // let initialGoods;
+  // initialGoods = getState.state.homeQueries.initial_Goods
+
+  const loadAppFromDB = async () => {
+    return new Promise((resolve, reject) => {
+      let appFromState = getState.state.dbSet.app;
+
+      if (appFromState !== undefined) {
+        
+        resolve(getData());
+
+      } else {
+        reject('app was NOT set');
+      }
+
+    })
+  }
 
   // call only on mount and unmount using empty array arg []
-  // useEffect(() => {
+  useEffect(() => {
     
-  //   if (props.appInstance === undefined) {
-  //     console.log('waiting for app prop');
-  //   } else {
-  //     getData();
-  //   }
-  // }, []);
+    async function renderContent() {
+      // const data = await getData();
+      const data = await loadAppFromDB();
+
+      // console.log(data);
+      
+      if (data !== null) {
+        getData();
+      }
+    }
+    
+    renderContent();
+
+    return (console.log("useeffect has run"));
+    
+  }, []);
+
+  let appFromRedux = getState.state.dbSet.app;
 
 
+  // currently loads all data from the database where an image is present
+  const getData = async () => {
 
-  const getData = () => {
+    // console.log('this is the app from redux state');
 
-    // const app = getState.state.dbSet.app;
-    let app = props.appInstance;
-    console.log(app);
-
-    const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
-    // const mongodb = props.mongoInstance;
-
+    const mongodb = await appFromRedux.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
     const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
     const query = { "images": { $exists: true, $ne: [] } };
 
@@ -53,13 +74,12 @@ const HomeBody = (props) => {
         // save initialGoods to state
         dispatch(get_Initial_Goods(data));
         // console.log(data);
+        console.log(getState.state);
 
         // initialLoadedGoods();
 
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));
-
-
   }
 
 

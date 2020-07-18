@@ -80,7 +80,7 @@ export default class Profile extends React.Component {
         title={
           <View>
             <Text>
-              Traded: {`${item.item.title}`} ${`${item.item.price} `} for item >>
+              Traded: {`${item.item.title}`} ${`${item.item.price} `} for item
               </Text>
           </View>
         }

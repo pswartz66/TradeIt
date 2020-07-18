@@ -13,7 +13,7 @@ const Home = (props) => {
   return (
     <View style={styles.container}>
       <HomeHeader />
-      <HomeBody appInstance={props.app} dbInstance={props.db} />
+      <HomeBody />
     </View>
   )
 };

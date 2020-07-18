@@ -69,7 +69,7 @@ export default function App() {
     whileLoading();
 
     // used as cleanup, i.e. useEffect needs to return 'something'
-    return (console.log('finished'));
+    return (console.log('initial app file finished'));
 
   }, [complete === false]);
 
@@ -79,7 +79,7 @@ export default function App() {
 
     if (Stitch.hasAppClient("tradeitrealm-gdxsi")) {
 
-      console.log('app already has client');
+      // console.log('app already has client');
 
       let existingClient;
 
@@ -100,7 +100,7 @@ export default function App() {
 
     } else {
 
-      console.log('app DOES NOT already have a client');
+      // console.log('app DOES NOT already have a client');
 
       Stitch.initializeDefaultAppClient("tradeitrealm-gdxsi").then(client => {
         setmyClient(client);        
@@ -125,10 +125,7 @@ export default function App() {
   }
 
   if (isLoadingSplash) {
-
-    return (
-      <InitialSplashScreen />
-    )
+    return (<InitialSplashScreen />)
   }
 
   return (
