@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
 
 const HomeBody = (props) => {
+
+  const [isLoaded, setIsLoaded] = useState(true);
 
   // console.log(props);
 
@@ -21,40 +24,40 @@ const HomeBody = (props) => {
   // let initialGoods;
   // initialGoods = getState.state.homeQueries.initial_Goods
 
-  const loadAppFromDB = async () => {
-    return new Promise((resolve, reject) => {
-      let appFromState = getState.state.dbSet.app;
+  // const loadAppFromDB = async () => {
+  //   return new Promise((resolve, reject) => {
+  //     let appFromState = getState.state.dbSet.app;
 
-      if (appFromState !== undefined) {
-        
-        resolve(getData());
+  //     if (appFromState !== undefined) {
 
-      } else {
-        reject('app was NOT set');
-      }
+  //       resolve(getData());
 
-    })
-  }
+  //     } else {
+  //       reject('app was NOT set');
+  //     }
+
+  //   })
+  // }
 
   // call only on mount and unmount using empty array arg []
-  useEffect(() => {
-    
-    async function renderContent() {
-      // const data = await getData();
-      const data = await loadAppFromDB();
+  // useEffect(() => {
 
-      // console.log(data);
-      
-      if (data !== null) {
-        getData();
-      }
-    }
-    
-    renderContent();
+  //   async function renderContent() {
+  //     // const data = await getData();
+  //     const data = await loadAppFromDB();
 
-    return (console.log("useeffect has run"));
-    
-  }, []);
+  //     // console.log(data);
+
+  //     if (data !== null) {
+  //       getData();
+  //     }
+  //   }
+
+  //   renderContent();
+
+  //   return (console.log("useeffect has run"));
+
+  // }, []);
 
   let appFromRedux = getState.state.dbSet.app;
 
@@ -73,8 +76,9 @@ const HomeBody = (props) => {
 
         // save initialGoods to state
         dispatch(get_Initial_Goods(data));
-        // console.log(data);
-        console.log(getState.state);
+        console.log(data);
+        // console.log(getState.state);
+
 
         // initialLoadedGoods();
 
@@ -82,6 +86,12 @@ const HomeBody = (props) => {
       .catch(err => console.error(`Failed to find documents: ${err}`));
   }
 
+  const refreshItemsFromDB = () => {
+
+    getData();
+
+    console.log('refreshButton was clicked');
+  }
 
   // const initialLoadedGoods = () => {
 
@@ -96,14 +106,35 @@ const HomeBody = (props) => {
 
   // }
 
-  return (
-    
-    <View style={styles.homeBody}>
-      <View style={styles.goodsContainers}>
+  if (isLoaded) {
+    return (
+
+      <View style={styles.homeBody}>
+        <View style={styles.isLoadingContainer}>
+          <Text style={{fontSize: 16}}>
+            Oops... no items were found.
+          </Text>
+          <TouchableOpacity style={styles.refreshBtn} onPress={refreshItemsFromDB}>
+
+              <Text style={{fontSize: 18, color: 'white'}}>
+                Refresh
+              </Text>
+          </TouchableOpacity>
+        </View>
 
       </View>
-    </View>
-  )
+    )
+  } else {
+    return (
+
+      <View style={styles.homeBody}>
+        <View style={styles.goodsContainers}>
+
+        </View>
+      </View>
+    )
+  }
+
 
 
 }
@@ -114,9 +145,14 @@ const styles = StyleSheet.create({
   homeBody: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#d5e4ed',
     width: '100%'
 
+  },
+  isLoadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   goodsContainers: {
     paddingTop: 20,
@@ -124,5 +160,15 @@ const styles = StyleSheet.create({
     width: 110,
     backgroundColor: 'ghostwhite',
     borderRadius: 6
+  },
+  refreshBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    padding: 10,
+    borderRadius: 4,
+    // height: 40,
+    width: 180,
+    backgroundColor: '#0454ab'
   }
 })
