@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
+import { ListItem, Card } from 'react-native-elements';
 
 const HomeBody = (props) => {
 
@@ -133,7 +134,53 @@ const HomeBody = (props) => {
     return (
 
       <View style={styles.homeBody}>
-        <View style={styles.goodsContainers}>
+        <View style={styles.goodsContainer}>
+          {/* {
+            pulledData.map((arrItem, index) => {
+              return (
+                <FlatList
+                  style={{
+                    backgroundColor: 'yellow'
+                  }}
+                  key={index}
+                  title={arrItem.title}
+                />
+              )
+            })
+          } */}
+
+          <FlatList
+            data={pulledData}
+            // columnWrapperStyle={styles.flatListItems}
+            numColumns={2}
+            vertical={true}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity style={styles.itemsTouchableContent}>
+                  <Text>{item.title}</Text>
+                <ListItem 
+                  style={{
+                    padding: 0
+                  }}
+                  containerStyle={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'yellow'
+                  }}
+                  // title={item.title}
+                  leftAvatar={{
+                    rounded: true,
+                    size: 90,
+                    source: { uri: item.images[0] }
+                  }}
+                />
+                
+                </TouchableOpacity>
+              )
+            }}
+          />
 
         </View>
       </View>
@@ -157,12 +204,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  goodsContainers: {
-    paddingTop: 20,
+  itemsTouchableContent: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    padding: 20,
+    width: '100%'
+  },
+  goodsContainer: {
+    flex: 1,
+    flexDirection: "column",
+    // padding: 10,
     height: 110,
-    width: 110,
-    backgroundColor: 'ghostwhite',
+    width: "100%",
+    backgroundColor: 'orange',
     borderRadius: 6
+  },
+  flatListItems: {
+    backgroundColor: 'purple'
+  },
+  listItems: {
+    backgroundColor: 'yellow'
+
   },
   refreshBtn: {
     justifyContent: 'center',
