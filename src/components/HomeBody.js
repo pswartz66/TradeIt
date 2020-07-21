@@ -8,6 +8,7 @@ import { get_Initial_Goods } from '../redux/actions';
 const HomeBody = (props) => {
 
   const [isLoaded, setIsLoaded] = useState(true);
+  const [pulledData, setPulledData] = useState([]);
 
   // console.log(props);
 
@@ -75,12 +76,16 @@ const HomeBody = (props) => {
       .then(data => {
 
         // save initialGoods to state
-        dispatch(get_Initial_Goods(data));
-        console.log(data);
+        // dispatch(get_Initial_Goods(data));
+        setPulledData(data);
+
+        console.log("this is the pulledData state: \n");
+        console.log(pulledData);
         // console.log(getState.state);
 
 
         // initialLoadedGoods();
+        setIsLoaded(false);
 
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));
@@ -134,8 +139,6 @@ const HomeBody = (props) => {
       </View>
     )
   }
-
-
 
 }
 
