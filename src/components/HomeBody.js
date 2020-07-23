@@ -135,48 +135,43 @@ const HomeBody = (props) => {
 
       <View style={styles.homeBody}>
         <View style={styles.goodsContainer}>
-          {/* {
-            pulledData.map((arrItem, index) => {
-              return (
-                <FlatList
-                  style={{
-                    backgroundColor: 'yellow'
-                  }}
-                  key={index}
-                  title={arrItem.title}
-                />
-              )
-            })
-          } */}
-
+        
           <FlatList
             data={pulledData}
-            // columnWrapperStyle={styles.flatListItems}
+            columnWrapperStyle={styles.flatListItems}
             numColumns={2}
             vertical={true}
             renderItem={({item}) => {
+              
               return (
-                <TouchableOpacity style={styles.itemsTouchableContent}>
-                  <Text>{item.title}</Text>
-                <ListItem 
+                <TouchableOpacity key={item._id} style={styles.itemsTouchableContent}>
+                  <Text style={{ fontSize: 16, padding: 2 }}>{item.title}</Text>
+                <ListItem
+                  key={item._id}
                   style={{
-                    padding: 0
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    
                   }}
                   containerStyle={{
                     flex: 1,
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'yellow'
+                    backgroundColor: '#71a0b0',
+                    // borderRadius: 10,
+                    borderBottomEndRadius: 10,
+                    borderBottomLeftRadius: 10,
+                    // margin: 2,
+                    width: 160
                   }}
-                  // title={item.title}
                   leftAvatar={{
                     rounded: true,
-                    size: 90,
+                    size: 120,
                     source: { uri: item.images[0] }
                   }}
                 />
-                
                 </TouchableOpacity>
               )
             }}
@@ -194,9 +189,11 @@ export default HomeBody;
 const styles = StyleSheet.create({
   homeBody: {
     flex: 1,
+    // flexDirection: "row",
     padding: 10,
     backgroundColor: '#d5e4ed',
-    width: '100%'
+    // width: '100%',
+    // height: "100%"
 
   },
   isLoadingContainer: {
@@ -207,23 +204,35 @@ const styles = StyleSheet.create({
   itemsTouchableContent: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
-    padding: 20,
-    width: '100%'
+    backgroundColor: '#beccd1',
+    // padding: 10,
+    // width: "100%",
+    borderRadius: 10,
+    margin: 10
+    // height: "100%",
+
   },
   goodsContainer: {
-    flex: 1,
-    flexDirection: "column",
+    // flex: 1,
+    // flexDirection: "row",
     // padding: 10,
-    height: 110,
-    width: "100%",
-    backgroundColor: 'orange',
-    borderRadius: 6
+    // height: "100%",
+    // width: "100%",
+    // backgroundColor: 'blue',
+    // borderRadius: 6
   },
   flatListItems: {
-    backgroundColor: 'purple'
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    // backgroundColor: 'purple',
+    width: "100%",
+    // height: "100%",
+    margin: 2,
+    // padding: 10
+    // borderRadius: 10
   },
   listItems: {
     backgroundColor: 'yellow'
