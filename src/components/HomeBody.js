@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, StyleSheet, Text, FlatList, TouchableHighlight, Image, ImageBackground } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
 import { ListItem, Card } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeBody = (props) => {
 
@@ -79,6 +80,7 @@ const HomeBody = (props) => {
         // save initialGoods to state
         // dispatch(get_Initial_Goods(data));
         setPulledData(data);
+        console.log(data);
 
         console.log("this is the pulledData state: \n");
         console.log(pulledData);
@@ -117,13 +119,13 @@ const HomeBody = (props) => {
 
       <View style={styles.homeBody}>
         <View style={styles.isLoadingContainer}>
-          <Text style={{fontSize: 16}}>
+          <Text style={{ fontSize: 16 }}>
             Oops... no items were found.
           </Text>
           <TouchableOpacity style={styles.refreshBtn} onPress={refreshItemsFromDB}>
 
-              <Text style={{fontSize: 18, color: 'white'}}>
-                Refresh
+            <Text style={{ fontSize: 18, color: 'white' }}>
+              Refresh
               </Text>
           </TouchableOpacity>
         </View>
@@ -133,20 +135,35 @@ const HomeBody = (props) => {
   } else {
     return (
 
-      <View style={styles.homeBody}>
-        <View style={styles.goodsContainer}>
-        
+      <SafeAreaView style={styles.homeBody}>
+        {/* <View style={styles.goodsContainer}> */}
+
           <FlatList
             data={pulledData}
-            columnWrapperStyle={styles.flatListItems}
+            // columnWrapperStyle={styles.flatListItems}
             numColumns={2}
             vertical={true}
-            renderItem={({item}) => {
-              
+            renderItem={({ item }) => {
+
               return (
                 <TouchableOpacity key={item._id} style={styles.itemsTouchableContent}>
-                  <Text style={{ fontSize: 16, padding: 2 }}>{item.title}</Text>
-                <ListItem
+                  <Text style={{ fontSize: 14, padding: 12, color: "#dfe6ed" }}>{item.title} ${Math.round(item.price, 0)}</Text>
+
+                  <SafeAreaView style={styles.imageScrollView}>
+                    <ScrollView horizontal={true}>
+                      {item.images.map((image) => {
+                        return (
+
+                            <ImageBackground style={{ justifyContent: 'center', height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
+
+                            </ImageBackground>
+
+                        )
+
+                        
+                      })}
+
+                      {/* <ListItem
                   key={item._id}
                   style={{
                     flex: 1,
@@ -159,10 +176,13 @@ const HomeBody = (props) => {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#71a0b0',
+                    // backgroundColor: '#0454ab',
+                    backgroundColor: '#052a4d',
+
                     // borderRadius: 10,
                     borderBottomEndRadius: 10,
                     borderBottomLeftRadius: 10,
+                    
                     // margin: 2,
                     width: 160
                   }}
@@ -171,14 +191,24 @@ const HomeBody = (props) => {
                     size: 120,
                     source: { uri: item.images[0] }
                   }}
-                />
+                /> */}
+                    </ScrollView>
+                  </SafeAreaView>
+
+                  {/* <TouchableHighlight
+                  style={styles.viewItemBtn}
+                >
+                  <Text>View</Text>
+
+                </TouchableHighlight> */}
+
                 </TouchableOpacity>
               )
             }}
           />
 
-        </View>
-      </View>
+        {/* </View> */}
+      </SafeAreaView>
     )
   }
 
@@ -189,10 +219,13 @@ export default HomeBody;
 const styles = StyleSheet.create({
   homeBody: {
     flex: 1,
-    // flexDirection: "row",
-    padding: 10,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    flexDirection: "column",
+    padding: 0,
+    margin: 0,
     backgroundColor: '#d5e4ed',
-    // width: '100%',
+    width: '100%',
     // height: "100%"
 
   },
@@ -203,15 +236,22 @@ const styles = StyleSheet.create({
   },
   itemsTouchableContent: {
     flex: 1,
-    flexDirection: 'column',
+    // flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#beccd1',
+    backgroundColor: '#052a4d',
     // padding: 10,
-    // width: "100%",
+    width: 160,
     borderRadius: 10,
-    margin: 10
-    // height: "100%",
+    margin: 10,
+    height: 200,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5
+    },
+    shadowOpacity: 0.45,
+    shadowRadius: 3.5,
 
   },
   goodsContainer: {
@@ -226,10 +266,11 @@ const styles = StyleSheet.create({
   flatListItems: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
+    // justifyContent: "center",
+    alignItems: "flex-start", 
     // backgroundColor: 'purple',
     width: "100%",
-    // height: "100%",
+    // height: "auto",
     margin: 2,
     // padding: 10
     // borderRadius: 10
@@ -247,5 +288,22 @@ const styles = StyleSheet.create({
     // height: 40,
     width: 180,
     backgroundColor: '#0454ab'
+  },
+  viewItemBtn: {
+    position: "relative",
+    left: 0,
+    backgroundColor: "yellow",
+    borderRadius: 4,
+    padding: 4,
+
+  },
+  imageScrollView: {
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    height: 210,
+    width: 130,
+    // marginHorizontal: 20,
+    // marginVertical: 20
   }
 })
