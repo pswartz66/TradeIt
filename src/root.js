@@ -38,6 +38,8 @@ const RootTabScreen = (props) => {
   // standard redux dispatch
   const dispatch = useDispatch();
   dispatch(set_App(props.app));
+  dispatch(set_Client(props.client));
+  dispatch(set_Mongo(props.db))
 
   return (
     <RootTab.Navigator

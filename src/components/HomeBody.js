@@ -4,13 +4,13 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from "react-redux";
 import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
-import { ListItem, Card } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeBody = (props) => {
 
   const [isLoaded, setIsLoaded] = useState(true);
   const [pulledData, setPulledData] = useState([]);
+  const [newIncomingTrade, setNewIncomingTrade] = useState([]);
 
   // console.log(props);
 
@@ -80,10 +80,10 @@ const HomeBody = (props) => {
         // save initialGoods to state
         // dispatch(get_Initial_Goods(data));
         setPulledData(data);
-        console.log(data);
+        // console.log(data);
 
         console.log("this is the pulledData state: \n");
-        console.log(pulledData);
+        // console.log(pulledData);
         // console.log(getState.state);
 
 
@@ -98,7 +98,7 @@ const HomeBody = (props) => {
 
     getData();
 
-    console.log('refreshButton was clicked');
+    // console.log('refreshButton was clicked');
   }
 
   // const initialLoadedGoods = () => {
@@ -146,7 +146,7 @@ const HomeBody = (props) => {
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity key={item._id} style={styles.itemsTouchableContent}>
+                <TouchableOpacity onPress={() => console.log('pressed item')} key={item._id} style={styles.itemsTouchableContent}>
                   <Text style={{ fontSize: 14, padding: 12, color: "#dfe6ed" }}>{item.title} ${Math.round(item.price, 0)}</Text>
 
                   <SafeAreaView style={styles.imageScrollView}>
@@ -154,44 +154,16 @@ const HomeBody = (props) => {
                       {item.images.map((image) => {
                         return (
 
-                            <ImageBackground style={{ justifyContent: 'center', height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
+                            <ImageBackground key={image.toString()} style={{ height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
 
                             </ImageBackground>
 
                         )
 
-                        
+
                       })}
 
-                      {/* <ListItem
-                  key={item._id}
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    
-                  }}
-                  containerStyle={{
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    // backgroundColor: '#0454ab',
-                    backgroundColor: '#052a4d',
-
-                    // borderRadius: 10,
-                    borderBottomEndRadius: 10,
-                    borderBottomLeftRadius: 10,
-                    
-                    // margin: 2,
-                    width: 160
-                  }}
-                  leftAvatar={{
-                    rounded: true,
-                    size: 120,
-                    source: { uri: item.images[0] }
-                  }}
-                /> */}
+                     
                     </ScrollView>
                   </SafeAreaView>
 
@@ -220,12 +192,12 @@ const styles = StyleSheet.create({
   homeBody: {
     flex: 1,
     // justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
     flexDirection: "column",
     padding: 0,
     margin: 0,
     backgroundColor: '#d5e4ed',
-    width: '100%',
+    // width: '100%',
     // height: "100%"
 
   },
@@ -271,7 +243,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'purple',
     width: "100%",
     // height: "auto",
-    margin: 2,
+    // margin: 2,
     // padding: 10
     // borderRadius: 10
   },
@@ -298,11 +270,11 @@ const styles = StyleSheet.create({
 
   },
   imageScrollView: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 210,
-    width: 130,
+    width: 160,
     // marginHorizontal: 20,
     // marginVertical: 20
   }

@@ -16,7 +16,7 @@ import {
   submit_Trade,
   set_Location_Post
 } from '../../redux/actions/index';
-import { AnonymousCredential } from 'mongodb-stitch-react-native-sdk';
+import { AnonymousCredential, RemoteMongoClient } from 'mongodb-stitch-react-native-sdk';
 
 const ListingMenu = ({ navigation }) => {
 
@@ -188,15 +188,22 @@ const ListingMenu = ({ navigation }) => {
   const setDescription = value => dispatch(set_Description(value));
   const setPrice = value => dispatch(set_Price(value));
 
+  // let mongoFromRedux = imageState.state.dbSet.mongo;
+  let clientFromRedux = imageState.state.dbSet.client;
   // Add data to databse when submit button is clicked
-  const submitListing = () => {
+  const submitListing = async () => {
     // const app = imageState.state.dbSet.app;
     // get db instances from from state
     // is there a better way to store this rather than saving it to state?
     // for example one client object has a lot of layers, are they all necessary?
-    const mongodb = imageState.state.dbSet.mongo;
-    const client = imageState.state.dbSet.client;
-    const goodsCollection = mongodb.db("TradeItDB").collection("Goods");
+    console.log(imageState.state.dbSet.app);
+
+    const app = imageState.state.dbSet.app;
+    const mongodb = app.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
+
+    // const mongodb = await mongoFromRedux;
+    const client = await clientFromRedux;
+    const goodsCollection = await mongodb.db("TradeItDB").collection("Goods");
 
     // console.log(goodsCollection);
 
@@ -244,7 +251,6 @@ const ListingMenu = ({ navigation }) => {
             } else {
               return (
                 // return the image selected
-                <>
                   <TouchableOpacity
                     onPress={() => _removeImage(image)}
                     key={image.toString()}
@@ -255,7 +261,6 @@ const ListingMenu = ({ navigation }) => {
                       </View>
                     </ImageBackground>
                   </TouchableOpacity>
-                </>
               )
             }
           }
