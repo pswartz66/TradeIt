@@ -10,9 +10,11 @@ const HomeBody = (props) => {
 
   const [isLoaded, setIsLoaded] = useState(true);
   const [pulledData, setPulledData] = useState([]);
-  const [newIncomingTrade, setNewIncomingTrade] = useState([]);
+  const [newIncomingTrade, setNewIncomingTrade] = useState(props.isNewItem);
 
-  // console.log(props);
+  // setNewIncomingTrade(props.isNewItem);
+
+  // console.log(props.isNewItem);
 
   // test logger to log out state object in its entirety
   const getState = useSelector(state => ({
@@ -21,49 +23,18 @@ const HomeBody = (props) => {
 
   // standard redux dispatch
   const dispatch = useDispatch();
-
-  // console.log(appFromRedux);
-
-  // let initialGoods;
-  // initialGoods = getState.state.homeQueries.initial_Goods
-
-  // const loadAppFromDB = async () => {
-  //   return new Promise((resolve, reject) => {
-  //     let appFromState = getState.state.dbSet.app;
-
-  //     if (appFromState !== undefined) {
-
-  //       resolve(getData());
-
-  //     } else {
-  //       reject('app was NOT set');
-  //     }
-
-  //   })
-  // }
-
+  
   // call only on mount and unmount using empty array arg []
   // useEffect(() => {
 
-  //   async function renderContent() {
-  //     // const data = await getData();
-  //     const data = await loadAppFromDB();
-
-  //     // console.log(data);
-
-  //     if (data !== null) {
-  //       getData();
-  //     }
+  //   if (newIncomingTrade) {
+  //     getData();
   //   }
-
-  //   renderContent();
-
-  //   return (console.log("useeffect has run"));
 
   // }, []);
 
-  let appFromRedux = getState.state.dbSet.app;
 
+  let appFromRedux = getState.state.dbSet.app;
 
   // currently loads all data from the database where an image is present
   const getData = async () => {
@@ -89,6 +60,7 @@ const HomeBody = (props) => {
 
         // initialLoadedGoods();
         setIsLoaded(false);
+        setNewIncomingTrade(false);
 
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));

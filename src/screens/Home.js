@@ -1,22 +1,25 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import HomeHeader from '../components/HomeHeader';
-import { Stitch, RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
-import { useSelector, useDispatch } from "react-redux";
-import { set_Client, set_Mongo, set_Db, set_App } from '../redux/actions/index';
 import HomeBody from '../components/HomeBody';
 
 
 const Home = (props) => {
-  // console.log(props.initialProps);
+  // console.log(props.route.params.isSubmitted);
 
+  // if (props.route.params.isSubmitted == undefined) {
+  //   console.log('its undefined we GET IT!!!!!!');
+  // }
   return (
     <View style={styles.container}>
       <HomeHeader />
-      <HomeBody />
+        {/* <HomeBody isNewItem={props.route.params.isSubmitted} /> */}
+        <HomeBody isNewItem={false} />
+      
     </View>
   )
 };
+
 
 export default Home;
 

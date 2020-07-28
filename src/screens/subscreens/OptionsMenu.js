@@ -85,7 +85,7 @@ const OptionsMenu = () => {
     // return state and set values back to initial state
     const applyFilter = () => {
         dispatch(apply_Filter());
-        console.log(fullState);
+        // console.log(fullState);
         // console.log(distance, priceFrom, priceTo)
     };
     // return state and set values back to initial state

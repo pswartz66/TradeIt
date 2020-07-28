@@ -224,11 +224,27 @@ const ListingMenu = ({ navigation }) => {
       console.log(`Successfully inserted item with _id: ${user.id}`)
     })
       .then(() => {
-        navigation.navigate("Home");
+        
+        // remove the images from the top slider section once item is submitted
+        removeAllImages();
+        
+        // clear the input forms as well and return original state
+        // setTitle('');
+        // setDescription('');
+        // setPrice('');
+        
+        navigation.navigate("Home", {
+          isSubmitted: true
+        });
       })
       .catch(console.error);
   }
 
+  const removeAllImages = () => {
+    for (let i = 0; i < imageArray.length; i++) {
+      _removeImage(imageArray[i]);
+    }
+  }
 
   return (
     <View style={styles.listingModalContainer}>
