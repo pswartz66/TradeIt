@@ -31,7 +31,7 @@ const HomeBody = (props) => {
   //     getData();
   //   }
 
-  // }, []);
+  // }, [newIncomingTrade]);
 
 
   let appFromRedux = getState.state.dbSet.app;

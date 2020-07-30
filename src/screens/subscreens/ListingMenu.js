@@ -210,6 +210,10 @@ const ListingMenu = ({ navigation }) => {
     // get form data from state object
     let formData = imageState.state;
 
+    // get timestamp
+    let newDate = new Date();
+    let currentTime = newDate.toLocaleString();
+
     // authenticate and then insert a document into mongodb
     client.auth.loginWithCredential(new AnonymousCredential()).then(user => {
       goodsCollection.insertOne({
@@ -219,7 +223,8 @@ const ListingMenu = ({ navigation }) => {
         price: formData.listForms.price,
         description: formData.listForms.description,
         images: formData.selectImages.images,
-        location: formData.listForms.location_post
+        location: formData.listForms.location_post,
+        dateAdded: currentTime
       })
       console.log(`Successfully inserted item with _id: ${user.id}`)
     })
