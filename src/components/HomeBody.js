@@ -6,7 +6,9 @@ import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeBody = (props) => {
+const HomeBody = (props, { navigation }) => {
+
+  console.log(props.navigation);
 
   const [isLoaded, setIsLoaded] = useState(true);
   const [pulledData, setPulledData] = useState([]);
@@ -86,6 +88,17 @@ const HomeBody = (props) => {
 
   // }
 
+  const navigateToConversation = () => {
+
+    console.log('pressed');
+
+    navigation.navigate("ConversationScreen");
+    // return (
+    //   <ConversationScreen />
+    // )
+
+  }
+
   if (isLoaded) {
     return (
 
@@ -118,7 +131,7 @@ const HomeBody = (props) => {
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity onPress={() => console.log('pressed item')} key={item._id} style={styles.itemsTouchableContent}>
+                <TouchableOpacity onPress={() => navigateToConversation()} key={item._id} style={styles.itemsTouchableContent}>
                   <Text style={{ fontSize: 14, padding: 12, color: "#dfe6ed" }}>{item.title} ${Math.round(item.price, 0)}</Text>
 
                   <SafeAreaView style={styles.imageScrollView}>

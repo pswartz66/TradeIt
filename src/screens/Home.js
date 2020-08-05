@@ -4,8 +4,9 @@ import HomeHeader from '../components/HomeHeader';
 import HomeBody from '../components/HomeBody';
 
 
-const Home = (props) => {
+const Home = (props, { navigation }) => {
   // console.log(props.route.params.isSubmitted);
+  // console.log(props)
 
   // if (props.route.params.isSubmitted == undefined) {
   //   console.log('its undefined we GET IT!!!!!!');

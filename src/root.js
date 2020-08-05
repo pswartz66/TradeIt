@@ -18,18 +18,36 @@ import ChooseImage from './components/ChooseImage';
 
 // import Ionicons from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ConversationScreen from './screens/subscreens/ConversationScreen';
 
 // Camera stack for when user is on camera TAB
 // here we'll let the user select an image from camera roll
 // and fill out a form for price/description/location of item
 const CameraStack = createStackNavigator();
 const CameraStackScreen = () => (
-  <CameraStack.Navigator>
+  <CameraStack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}
+  >
     <CameraStack.Screen name="ChooseImage" component={ChooseImage} />
     <CameraStack.Screen name="ListingMenu" component={ListingMenu} />
   </CameraStack.Navigator>
 )
 
+const HomeStack = createStackNavigator();
+const HomeStackScreen = () => {
+  return (
+  <HomeStack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}
+  >
+    <HomeStack.Screen name="Home" component={Home} />
+    <HomeStack.Screen name="ConversationScreen" component={ConversationScreen} />
+  </HomeStack.Navigator>
+  )
+}
 
 // Root bottom tab navigation
 const RootTab = createBottomTabNavigator();
@@ -71,7 +89,7 @@ const RootTabScreen = (props) => {
         showLabel: false
       }}
     >
-      <RootTab.Screen name="Home" component={Home} />
+      <RootTab.Screen name="Home" component={HomeStackScreen} />
       <RootTab.Screen name="Camera" component={CameraStackScreen} />
       <RootTab.Screen name="Profile" component={Profile} />
     </RootTab.Navigator>
