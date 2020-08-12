@@ -4,18 +4,15 @@ import HomeHeader from '../components/HomeHeader';
 import HomeBody from '../components/HomeBody';
 
 
-const Home = (props, { navigation }) => {
+const Home = () => {
   // console.log(props.route.params.isSubmitted);
-  // console.log(props)
+  // console.log(props.navigation.navigate('ConversationScreen"'));
 
-  // if (props.route.params.isSubmitted == undefined) {
-  //   console.log('its undefined we GET IT!!!!!!');
-  // }
   return (
     <View style={styles.container}>
       <HomeHeader />
-        {/* <HomeBody isNewItem={props.route.params.isSubmitted} /> */}
-        <HomeBody isNewItem={false} />
+      
+      <HomeBody isNewItem={false} />
       
     </View>
   )
@@ -26,7 +23,9 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    // backgroundColor: 'yellow',
+    // height: '100%'
     // alignItems: 'center',
     // justifyContent: 'center',
   }

@@ -6,13 +6,13 @@ import { RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 import { get_Initial_Goods } from '../redux/actions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeBody = (props, { navigation }) => {
+const HomeBody = ({ navigation }) => {
 
-  console.log(props.navigation);
+  console.log(navigation);
 
   const [isLoaded, setIsLoaded] = useState(true);
   const [pulledData, setPulledData] = useState([]);
-  const [newIncomingTrade, setNewIncomingTrade] = useState(props.isNewItem);
+  // const [newIncomingTrade, setNewIncomingTrade] = useState(props.isNewItem);
 
   // setNewIncomingTrade(props.isNewItem);
 
@@ -25,7 +25,7 @@ const HomeBody = (props, { navigation }) => {
 
   // standard redux dispatch
   const dispatch = useDispatch();
-  
+
   // call only on mount and unmount using empty array arg []
   // useEffect(() => {
 
@@ -62,7 +62,7 @@ const HomeBody = (props, { navigation }) => {
 
         // initialLoadedGoods();
         setIsLoaded(false);
-        setNewIncomingTrade(false);
+        // setNewIncomingTrade(false);
 
       })
       .catch(err => console.error(`Failed to find documents: ${err}`));
@@ -93,35 +93,39 @@ const HomeBody = (props, { navigation }) => {
     console.log('pressed');
 
     navigation.navigate("ConversationScreen");
-    // return (
-    //   <ConversationScreen />
-    // )
+
 
   }
 
   if (isLoaded) {
     return (
 
-      <View style={styles.homeBody}>
-        <View style={styles.isLoadingContainer}>
-          <Text style={{ fontSize: 16 }}>
-            Oops... no items were found.
-          </Text>
-          <TouchableOpacity style={styles.refreshBtn} onPress={refreshItemsFromDB}>
+      <View>
 
-            <Text style={{ fontSize: 18, color: 'white' }}>
-              Refresh
+        <View style={styles.homeBody}>
+          <View style={styles.isLoadingContainer}>
+            <Text style={{ fontSize: 16 }}>
+              Oops... no items were found.
+          </Text>
+            <TouchableOpacity style={styles.refreshBtn} onPress={refreshItemsFromDB}>
+
+              <Text style={{ fontSize: 18, color: 'white' }}>
+                Refresh
               </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+
         </View>
 
       </View>
+
     )
   } else {
     return (
+      
+        <SafeAreaView style={styles.homeBody}>
+          {/* <View style={styles.goodsContainer}> */}
 
-      <SafeAreaView style={styles.homeBody}>
-        {/* <View style={styles.goodsContainer}> */}
 
           <FlatList
             data={pulledData}
@@ -139,16 +143,16 @@ const HomeBody = (props, { navigation }) => {
                       {item.images.map((image) => {
                         return (
 
-                            <ImageBackground key={image.toString()} style={{ height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
+                          <ImageBackground key={image.toString()} style={{ height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
 
-                            </ImageBackground>
+                          </ImageBackground>
 
                         )
 
 
                       })}
 
-                     
+
                     </ScrollView>
                   </SafeAreaView>
 
@@ -164,8 +168,10 @@ const HomeBody = (props, { navigation }) => {
             }}
           />
 
-        {/* </View> */}
-      </SafeAreaView>
+          {/* </View> */}
+        </SafeAreaView>
+
+
     )
   }
 
@@ -175,13 +181,14 @@ export default HomeBody;
 
 const styles = StyleSheet.create({
   homeBody: {
-    flex: 1,
+    // flex: 1,
     // justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: "column",
+    flexDirection: 'column',
     padding: 0,
     margin: 0,
-    backgroundColor: '#d5e4ed',
+    // backgroundColor: '#d5e4ed',
+    backgroundColor: 'purple',
     // width: '100%',
     // height: "100%"
 
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     // justifyContent: "center",
-    alignItems: "flex-start", 
+    alignItems: "flex-start",
     // backgroundColor: 'purple',
     width: "100%",
     // height: "auto",

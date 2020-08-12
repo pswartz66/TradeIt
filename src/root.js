@@ -15,6 +15,10 @@ import Home from './screens/Home';
 import Profile from './screens/Profile';
 import ListingMenu from './screens/subscreens/ListingMenu';
 import ChooseImage from './components/ChooseImage';
+import HomeBody from './components/HomeBody';
+import HomeHeader from './components/HomeHeader';
+
+
 
 // import Ionicons from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,7 +31,7 @@ const CameraStack = createStackNavigator();
 const CameraStackScreen = () => (
   <CameraStack.Navigator
     screenOptions={{
-      headerShown: false
+      headerShown: true
     }}
   >
     <CameraStack.Screen name="ChooseImage" component={ChooseImage} />
@@ -44,6 +48,10 @@ const HomeStackScreen = () => {
     }}
   >
     <HomeStack.Screen name="Home" component={Home} />
+    {/* <HomeStack.Screen name="HomeHeader" component={HomeHeader} /> */}
+
+    {/* <HomeStack.Screen name="HomeBody" component={HomeBody} /> */}
+
     <HomeStack.Screen name="ConversationScreen" component={ConversationScreen} />
   </HomeStack.Navigator>
   )

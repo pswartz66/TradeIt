@@ -5,6 +5,7 @@ import OptionsMenu from '../screens/subscreens/OptionsMenu';
 import { useSelector, useDispatch } from "react-redux";
 import { search_Query, submit_Query, remove_Query } from '../redux/actions/index';
 
+
 const HomeHeader = () => {
 
   // standard redux dispatch
@@ -79,13 +80,13 @@ const HomeHeader = () => {
               {/* Options menu component is a subscreen i.e. a modal pop up filter */}
               <OptionsMenu />
             </TouchableOpacity>
+            
           </View>
-
 
         </View>
 
       </View>
-
+      
     </View>
   )
 }
@@ -93,12 +94,14 @@ const HomeHeader = () => {
 export default HomeHeader;
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#d5e4ed',
-    // opacity: .5
-  },
+  // container: {
+  //   // flex: 1,
+  //   flexDirection: 'row',
+  //   backgroundColor: 'orange',
+  //   // width: '100%',
+  //   height: 300,
+  //   // opacity: .5
+  // },
   homeHead: {
     paddingTop: 20,
     paddingLeft: 0,

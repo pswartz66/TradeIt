@@ -20,6 +20,8 @@ import { AnonymousCredential, RemoteMongoClient } from 'mongodb-stitch-react-nat
 
 const ListingMenu = ({ navigation }) => {
 
+  console.log(navigation);
+  
   // test logger to log out state object in its entirety
   const imageState = useSelector(state => ({
     state
