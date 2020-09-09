@@ -75,7 +75,6 @@ const ChooseImage = ({ navigation }) => {
 
         }
 
-
     }
 
     // navigate to next screen after image selection

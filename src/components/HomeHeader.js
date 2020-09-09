@@ -94,20 +94,21 @@ const HomeHeader = () => {
 export default HomeHeader;
 
 const styles = StyleSheet.create({
-  // container: {
-  //   // flex: 1,
-  //   flexDirection: 'row',
-  //   backgroundColor: 'orange',
-  //   // width: '100%',
-  //   height: 300,
-  //   // opacity: .5
-  // },
+  container: {
+    // flex: 6,
+    // flexDirection: 'row',
+    backgroundColor: 'orange',
+    width: '100%',
+    height: 128,
+    // opacity: .5
+  },
   homeHead: {
+    flex: 6,
     paddingTop: 20,
     paddingLeft: 0,
-    height: 128,
+    // height: 128,
     width: '100%',
-    // flexDirection: 'column',
+    flexDirection: 'column',
     alignItems: 'center',
     // alignContent: 'space-between',
     // justifyContent: 'center',

@@ -102,11 +102,11 @@ const HomeBody = ({ navigation }) => {
 
       <View>
 
-        <View style={styles.homeBody}>
+        <View style={styles.homeBodyNoData}>
           <View style={styles.isLoadingContainer}>
-            <Text style={{ fontSize: 16 }}>
+            <Text style={{ fontSize: 20 }}>
               Oops... no items were found.
-          </Text>
+            </Text>
             <TouchableOpacity style={styles.refreshBtn} onPress={refreshItemsFromDB}>
 
               <Text style={{ fontSize: 18, color: 'white' }}>
@@ -122,54 +122,50 @@ const HomeBody = ({ navigation }) => {
     )
   } else {
     return (
-      
-        <SafeAreaView style={styles.homeBody}>
-          {/* <View style={styles.goodsContainer}> */}
+
+      <SafeAreaView style={styles.homeBody}>
 
 
-          <FlatList
-            data={pulledData}
-            // columnWrapperStyle={styles.flatListItems}
-            numColumns={2}
-            vertical={true}
-            renderItem={({ item }) => {
+        <FlatList
+          data={pulledData}
+          // columnWrapperStyle={styles.flatListItems}
+          numColumns={2}
+          vertical={true}
+          renderItem={({ item }) => {
 
-              return (
-                <TouchableOpacity onPress={() => navigateToConversation()} key={item._id} style={styles.itemsTouchableContent}>
-                  <Text style={{ fontSize: 14, padding: 12, color: "#dfe6ed" }}>{item.title} ${Math.round(item.price, 0)}</Text>
+            return (
+              <TouchableOpacity onPress={() => navigateToConversation()} key={item._id} style={styles.itemsTouchableContent}>
+                <Text style={{ fontSize: 14, padding: 12, color: "#dfe6ed" }}>{item.title} ${Math.round(item.price, 0)}</Text>
 
-                  <SafeAreaView style={styles.imageScrollView}>
-                    <ScrollView horizontal={true}>
-                      {item.images.map((image) => {
-                        return (
+                <SafeAreaView style={styles.imageScrollView}>
+                  <ScrollView horizontal={true}>
+                    {item.images.map((image) => {
+                      return (
 
-                          <ImageBackground key={image.toString()} style={{ height: 100, width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
+                          <ImageBackground key={image.toString()} style={{ width: 100, margin: 20 }} source={{ uri: image }} imageStyle={{ margin: 0, borderRadius: 10 }}>
 
                           </ImageBackground>
+                      )
 
-                        )
-
-
-                      })}
+                    })}
 
 
-                    </ScrollView>
-                  </SafeAreaView>
+                  </ScrollView>
+                </SafeAreaView>
 
-                  {/* <TouchableHighlight
+                {/* <TouchableHighlight
                   style={styles.viewItemBtn}
                 >
                   <Text>View</Text>
 
                 </TouchableHighlight> */}
 
-                </TouchableOpacity>
-              )
-            }}
-          />
+              </TouchableOpacity>
+            )
+          }}
+        />
 
-          {/* </View> */}
-        </SafeAreaView>
+      </SafeAreaView>
 
 
     )
@@ -180,15 +176,25 @@ const HomeBody = ({ navigation }) => {
 export default HomeBody;
 
 const styles = StyleSheet.create({
-  homeBody: {
+  homeBodyNoData: {
     // flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    justifyContent: 'center',
+    // alignItems: 'center',
+    // flexDirection: 'row',
     padding: 0,
+    backgroundColor: 'lightgrey',
+    height: "88%"
+  },
+  homeBody: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    flexDirection: 'column',
+    paddingTop: 0,
+    paddingLeft: 8,
     margin: 0,
-    // backgroundColor: '#d5e4ed',
-    backgroundColor: 'purple',
+    backgroundColor: '#d5e4ed',
+    // backgroundColor: 'purple',
     // width: '100%',
     // height: "100%"
 
@@ -218,15 +224,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
 
   },
-  goodsContainer: {
-    // flex: 1,
-    // flexDirection: "row",
-    // padding: 10,
-    // height: "100%",
-    // width: "100%",
-    // backgroundColor: 'blue',
-    // borderRadius: 6
-  },
+
   flatListItems: {
     flex: 1,
     flexDirection: "row",
@@ -270,4 +268,5 @@ const styles = StyleSheet.create({
     // marginHorizontal: 20,
     // marginVertical: 20
   }
+
 })
